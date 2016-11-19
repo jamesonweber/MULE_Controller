@@ -15,25 +15,37 @@
                 <ColumnDefinition Width="10*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10*" MinHeight="350"/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
 
-                <!-- Row 1 Grid -->
-                <Grid Grid.Column="1">
+                <!-- Row 1 Grid - Col 1 = Video Display Col 2 = Title and Location -->
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70*" />
+                        <ColumnDefinition Width="30*" MinWidth="350"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Padding="0,10,0,0" Grid.Column="1">
+                        <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,15,0,25" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
+                        <TextBlock Text="Location Information"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0"  TextWrapping="Wrap" FontSize="32" />
+                        <TextBlock Text="Longitude:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Latitude:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Depth:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Row 2 Grid - Col 1 = Data Poster; Col 2 = Sensor Information -->
+                <Grid Grid.Column="1" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="70*" />
-                        <ColumnDefinition Width="30*" />
+                        <ColumnDefinition Width="30*" MinWidth="300" />
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
-                    <Viewbox Grid.Row="0" Grid.Column="1" >
-                        <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,0,50,0" FontSize="32" />
-                    </Viewbox>
-                </Grid>
-            
+                
+
+                        
+
+            </Grid>
+
             <Button Content="Button"  Grid.Column="1"  Grid.Row="1"  />
         </Grid>
 
