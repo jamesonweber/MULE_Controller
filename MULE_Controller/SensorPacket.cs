@@ -4,7 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/* ******************************
+/*******************************
+* References
+* ******************************
+* 
+* ******************************
+* Documentation
+* ******************************
  * Author: Jameson Weber
  * Date:   Nov 19 2016
  * Desc:   Class for creating a sensor packet object. These are generic objects designed to hold data temporarily in a queue

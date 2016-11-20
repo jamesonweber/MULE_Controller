@@ -4,7 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/* ******************************
+/*******************************
+* References
+* ******************************
+* 
+* ******************************
+* Documentation
+* ******************************
  * Author: Jameson Weber
  * Date:   Nov 19 2016
  * Desc:   Class for creating a data post object. The details value will be populated from the SensorPacket values in the queue.

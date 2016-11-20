@@ -28,10 +28,13 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Padding="0,25,0,0" Grid.Column="1">
                         <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,15" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
-                        <TextBlock Text="Location Information"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,10"  TextWrapping="Wrap" FontSize="32" />
-                        <TextBlock Text="Longitude:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        <TextBlock Text="Latitude:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        <TextBlock Text="Depth:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        
+                        <TextBlock Text="Connection"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0"  TextWrapping="Wrap" FontSize="32" />
+                        <TextBlock Text="MULE Status:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Controller Status:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <Button Width="100" Height="35" Margin="0,10,0,0">Connect</Button>
+                        
+                        
                     </StackPanel>
                 </Grid>
 
@@ -42,7 +45,12 @@
                         <ColumnDefinition Width="30*" MinWidth="350" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Padding="0,0,0,0" Grid.Column="1">
-                    <TextBlock Text="Sensor Information"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,10"  TextWrapping="Wrap" FontSize="32" />
+                        <TextBlock Text="Location Information"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0"  TextWrapping="Wrap" FontSize="32" />
+                        <TextBlock Text="Longitude:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Latitude:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Depth:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        
+                        <TextBlock Text="Sensor Information"  Grid.Column="1" Grid.Row="0" Padding="0,15,0,0"  TextWrapping="Wrap" FontSize="32" />
                         <TextBlock Text="Module 1:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Text="Module 2:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Text="Module 3:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
@@ -52,7 +60,7 @@
                     </StackPanel>
                     
                     <StackPanel Padding="25,0,0,0" MaxWidth="500" MinWidth="500" HorizontalAlignment="Left" Grid.Column="0">
-                        <TextBlock Text="Data Post"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,10"  TextWrapping="Wrap" FontSize="32" />
+                        <TextBlock Text="Data Post"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0"  TextWrapping="Wrap" FontSize="32" />
                         <TextBlock Text="Sensor: "  Padding="0,0,0,0" FontSize="20" />
                         <TextBox></TextBox>
                         <TextBlock Text="Description: "  Padding="0,10,0,0" FontSize="20" />

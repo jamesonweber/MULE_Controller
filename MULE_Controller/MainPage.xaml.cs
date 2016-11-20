@@ -15,7 +15,30 @@ using Windows.UI.Xaml.Navigation;
 
 using Windows.Gaming.Input;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+
+/*******************************
+* References
+* ******************************
+* https://sandervandevelde.wordpress.com/2016/03/18/control-your-arduino-rover-using-firmata-and-xbox-one-controller/
+* ******************************
+* Documentation
+* ******************************
+* Author: Jameson Weber
+* Date:   Nov 19 2016
+* Desc:   Class for creating a sensor packet object. These are generic objects designed to hold data temporarily in a queue
+*          awaiting a "data post" trigger. At that point 10 of these pakcets from the same sensor will be inserted into the
+*          sensor details table
+*          
+* ******************************          
+* Modifications
+* ******************************
+* Author: 
+* Date:   
+* Desc:   
+* 
+*/
 
 namespace MULE_Controller
 {
