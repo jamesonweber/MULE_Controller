@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
     <!-- Main container grid -->
     <Grid x:Name="MainGrid"  Background="White"  >
         <!-- Rows grid -->
@@ -22,12 +23,12 @@
                 <!-- Row 1 Grid - Col 1 = Video Display Col 2 = Title and Location -->
                 <Grid Grid.Column="1" Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70*" />
+                        <ColumnDefinition Width="70*"  MinWidth="550"/>
                         <ColumnDefinition Width="30*" MinWidth="350"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Padding="0,10,0,0" Grid.Column="1">
-                        <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,15,0,25" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
-                        <TextBlock Text="Location Information"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0"  TextWrapping="Wrap" FontSize="32" />
+                    <StackPanel Padding="0,25,0,0" Grid.Column="1">
+                        <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,15" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
+                        <TextBlock Text="Location Information"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,10"  TextWrapping="Wrap" FontSize="32" />
                         <TextBlock Text="Longitude:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Text="Latitude:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Text="Depth:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
@@ -37,18 +38,37 @@
                 <!-- Row 2 Grid - Col 1 = Data Poster; Col 2 = Sensor Information -->
                 <Grid Grid.Column="1" Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="70*" />
-                        <ColumnDefinition Width="30*" MinWidth="300" />
+                        <ColumnDefinition Width="70*"  MinWidth="550"/>
+                        <ColumnDefinition Width="30*" MinWidth="350" />
                     </Grid.ColumnDefinitions>
-                
+                    <StackPanel Padding="0,0,0,0" Grid.Column="1">
+                    <TextBlock Text="Sensor Information"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,10"  TextWrapping="Wrap" FontSize="32" />
+                        <TextBlock Text="Module 1:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Module 2:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Module 3:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Module 4:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Module 5:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="Module 6:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                    </StackPanel>
+                    
+                    <StackPanel Padding="25,0,0,0" MaxWidth="500" MinWidth="500" HorizontalAlignment="Left" Grid.Column="0">
+                        <TextBlock Text="Data Post"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,10"  TextWrapping="Wrap" FontSize="32" />
+                        <TextBlock Text="Sensor: "  Padding="0,0,0,0" FontSize="20" />
+                        <TextBox></TextBox>
+                        <TextBlock Text="Description: "  Padding="0,10,0,0" FontSize="20" />
+                        <TextBox Height="100" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Width="100" Height="35" Margin="0,10,0,0">Post</Button>
+                            <Button Width="100" Height="35" Margin="10,10,0,0">View Queue</Button>
+                        </StackPanel>
+                    </StackPanel>
 
-                        
+                </Grid>
 
-            </Grid>
 
-            <Button Content="Button"  Grid.Column="1"  Grid.Row="1"  />
         </Grid>
 
 
     </Grid>
+    </ScrollViewer>
 </Page>
