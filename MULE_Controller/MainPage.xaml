@@ -30,9 +30,10 @@
                         <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,15" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
                         
                         <TextBlock Text="Connection"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0"  TextWrapping="Wrap" FontSize="32" />
-                        <TextBlock Text="MULE Status:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        <TextBlock Text="Controller Status:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        <Button Width="100" Height="35" Margin="0,10,0,0">Connect</Button>
+                        <TextBlock Text="MULE Controls Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Text="MULE Sensors Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Name="controllerStatusTextBlock" Text="Controller Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <Button Name="connectButton" Width="100" Height="35" Margin="0,10,0,0" Click="connectButton_Click">Sync</Button>
                         
                         
                     </StackPanel>

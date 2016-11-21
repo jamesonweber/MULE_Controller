@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using Windows.Gaming.Input;
+using Windows.UI.Core;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -48,13 +49,70 @@ namespace MULE_Controller
     public sealed partial class MainPage : Page
     {
 
+        private Gamepad gamepad = null;
 
         public MainPage()
         {
             this.InitializeComponent();
+            
+        }
 
+        /* Method to deal with syncing the application with all external dependancies
+         * This includes:
+         * -Controller
+         * -Sensors
+         * -Video Feed
+         */
+        private void connectButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (gamepad == null)
+            {
+                gamepad_Controls();
+            }
+        }
+        
+        /* Method for dealing with button actions of connected controller */
+        private async void gamepad_Controls()
+        {
+            Gamepad.GamepadAdded += gamepad_Added;
+            Gamepad.GamepadRemoved += gamepad_Removed;
+
+            while (true)
+            {
+                await Dispatcher.RunAsync(
+                    CoreDispatcherPriority.Normal, () =>
+                    {
+                        if (gamepad == null)
+                        {
+                            return;
+                        }
+
+                    });
+            }
         }
 
 
+        /* Async methods to deal with when a controller is connected and disconnected while the application is running */
+        private async void gamepad_Removed(object sender, Gamepad e)
+        {
+            gamepad = null;
+
+            await Dispatcher.RunAsync(
+                 CoreDispatcherPriority.Normal, () =>
+                     {
+                           controllerStatusTextBlock.Text = "Controller Status: Disconnected";
+                      });
+        }
+        private async void gamepad_Added(object sender, Gamepad e)
+        {
+            gamepad = e;
+
+            await Dispatcher.RunAsync(
+                  CoreDispatcherPriority.Normal, () =>
+                  {
+                       controllerStatusTextBlock.Text = "Controller Status: Connected";
+                   });
+        }
     }
 }
+
