@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 
 using Windows.Gaming.Input;
 using Windows.UI.Core;
+using System.Threading.Tasks;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -73,7 +74,7 @@ namespace MULE_Controller
         
         /* Method for dealing with button actions of connected controller */
         private async void gamepad_Controls()
-        {
+        { 
             Gamepad.GamepadAdded += gamepad_Added;
             Gamepad.GamepadRemoved += gamepad_Removed;
 
@@ -81,13 +82,18 @@ namespace MULE_Controller
             {
                 await Dispatcher.RunAsync(
                     CoreDispatcherPriority.Normal, () =>
-                    {
+                    { 
                         if (gamepad == null)
                         {
                             return;
                         }
 
+                        var input = gamepad.GetCurrentReading();
+
+                        controllerInputTextBlock.Text = input.RightThumbstickX.ToString();
+                       
                     });
+                await Task.Delay(TimeSpan.FromMilliseconds(5));
             }
         }
 
