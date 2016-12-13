@@ -16,6 +16,9 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Gaming.Input;
 using Windows.UI.Core;
 using System.Threading.Tasks;
+using Windows.Networking;
+using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -24,6 +27,7 @@ using System.Threading.Tasks;
 * References
 * ******************************
 * https://sandervandevelde.wordpress.com/2016/03/18/control-your-arduino-rover-using-firmata-and-xbox-one-controller/
+* http://donatas.xyz/streamsocket-tcpip-client.html
 * ******************************
 * Documentation
 * ******************************
@@ -50,6 +54,8 @@ namespace MULE_Controller
     public sealed partial class MainPage : Page
     {
 
+        private StreamSocket socket;
+        private DataWriter writer;
         private Gamepad gamepad = null;
 
         public MainPage()
@@ -68,15 +74,51 @@ namespace MULE_Controller
         {
             if (gamepad == null)
             {
-                gamepad_Controls();
+                gamepad_Controls("localhost", "8888");
             }
         }
+
         
         /* Method for dealing with button actions of connected controller */
-        private async void gamepad_Controls()
+        private async void gamepad_Controls(String hostStr, String port)
         { 
             Gamepad.GamepadAdded += gamepad_Added;
             Gamepad.GamepadRemoved += gamepad_Removed;
+
+            if(socket == null)
+            {
+                socket = new StreamSocket();
+                HostName host = new HostName(hostStr);
+                try
+                {
+                    // Connect to the server
+                    await socket.ConnectAsync(host, port);
+
+                }
+                catch (Exception exception)
+                {
+                    switch (SocketError.GetStatus(exception.HResult))
+                    {
+                        case SocketErrorStatus.HostNotFound:
+                            // Handle HostNotFound Error
+                            throw;
+                        default:
+                            // If this is an unknown status it means that the error is fatal and retry will likely fail.
+                            throw;
+                    }
+                }
+                centralprogramStatusTextBlock.Text = "MULE Controls Status: Connected";
+            }
+
+            if(writer == null)
+            {
+                writer = new DataWriter(socket.OutputStream);
+                // Set the Unicode character encoding for the output stream
+                writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+                // Specify the byte order of a stream.
+                writer.ByteOrder = Windows.Storage.Streams.ByteOrder.LittleEndian;
+
+            }
 
             while (true)
             {
@@ -89,10 +131,32 @@ namespace MULE_Controller
                         }
 
                         var input = gamepad.GetCurrentReading();
+                        String inputString = input.RightThumbstickX.ToString();
+                        controllerInputTextBlock.Text = inputString;
 
-                        controllerInputTextBlock.Text = input.RightThumbstickX.ToString();
-                       
+                        // Gets the size of UTF-8 string.
+                        writer.MeasureString(inputString);
+                        // Write a string value to the output stream.
+                        writer.WriteString(inputString);
+                        
+
                     });
+                try
+                {
+                    await writer.StoreAsync();
+                }
+                catch (Exception exception)
+                {
+                    switch (SocketError.GetStatus(exception.HResult))
+                    {
+                        case SocketErrorStatus.HostNotFound:
+                            // Handle HostNotFound Error
+                            throw;
+                        default:
+                            // If this is an unknown status it means that the error is fatal and retry will likely fail.
+                            throw;
+                    }
+                }
                 await Task.Delay(TimeSpan.FromMilliseconds(5));
             }
         }
