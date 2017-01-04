@@ -70,23 +70,26 @@ namespace MULE_Controller
          * -Sensors
          * -Video Feed
          */
-        private void connectButton_Click(object sender, RoutedEventArgs e)
+        private async void connectButton_Click(object sender, RoutedEventArgs e)
         {
+
+            if (socket == null)
+            {
+                await central_program_Connect("localhost", "8888");
+            }
+
             if (gamepad == null)
             {
-                gamepad_Controls("localhost", "8888");
+                gamepad_Controls();
             }
+
+
+
         }
 
-        
-        /* Method for dealing with button actions of connected controller */
-        private async void gamepad_Controls(String hostStr, String port)
-        { 
-            Gamepad.GamepadAdded += gamepad_Added;
-            Gamepad.GamepadRemoved += gamepad_Removed;
-
-            if(socket == null)
-            {
+        /* Method for connecting to the central program of the MULE */
+        private async Task central_program_Connect(String hostStr, String port)
+        {
                 socket = new StreamSocket();
                 HostName host = new HostName(hostStr);
                 try
@@ -108,17 +111,23 @@ namespace MULE_Controller
                     }
                 }
                 centralprogramStatusTextBlock.Text = "MULE Controls Status: Connected";
-            }
+            
 
-            if(writer == null)
-            {
                 writer = new DataWriter(socket.OutputStream);
                 // Set the Unicode character encoding for the output stream
                 writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
                 // Specify the byte order of a stream.
                 writer.ByteOrder = Windows.Storage.Streams.ByteOrder.LittleEndian;
 
-            }
+            
+        }
+
+        
+        /* Method for dealing with button actions of connected controller */
+        private async void gamepad_Controls()
+        { 
+            Gamepad.GamepadAdded += gamepad_Added;
+            Gamepad.GamepadRemoved += gamepad_Removed;
 
             while (true)
             {
