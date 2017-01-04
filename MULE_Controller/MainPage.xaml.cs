@@ -90,36 +90,34 @@ namespace MULE_Controller
         /* Method for connecting to the central program of the MULE */
         private async Task central_program_Connect(String hostStr, String port)
         {
-                socket = new StreamSocket();
-                HostName host = new HostName(hostStr);
-                try
-                {
-                    // Connect to the server
-                    await socket.ConnectAsync(host, port);
+            socket = new StreamSocket();
+            HostName host = new HostName(hostStr);
+            try
+            {
+                // Connect to the server
+                await socket.ConnectAsync(host, port);
 
-                }
-                catch (Exception exception)
+            }
+            catch (Exception exception)
+            {
+                switch (SocketError.GetStatus(exception.HResult))
                 {
-                    switch (SocketError.GetStatus(exception.HResult))
-                    {
-                        case SocketErrorStatus.HostNotFound:
-                            // Handle HostNotFound Error
-                            throw;
-                        default:
-                            // If this is an unknown status it means that the error is fatal and retry will likely fail.
-                            throw;
-                    }
+                    case SocketErrorStatus.HostNotFound:
+                        // Handle HostNotFound Error
+                        throw;
+                    default:
+                        // If this is an unknown status it means that the error is fatal and retry will likely fail.
+                        throw;
                 }
-                centralprogramStatusTextBlock.Text = "MULE Controls Status: Connected";
+            }
+            centralprogramStatusTextBlock.Text = "MULE Controls Status: Connected";
             
 
-                writer = new DataWriter(socket.OutputStream);
-                // Set the Unicode character encoding for the output stream
-                writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-                // Specify the byte order of a stream.
-                writer.ByteOrder = Windows.Storage.Streams.ByteOrder.LittleEndian;
-
-            
+            writer = new DataWriter(socket.OutputStream);
+            // Set the Unicode character encoding for the output stream
+            writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+            // Specify the byte order of a stream.
+            writer.ByteOrder = Windows.Storage.Streams.ByteOrder.LittleEndian;      
         }
 
         
@@ -139,15 +137,14 @@ namespace MULE_Controller
                             return;
                         }
 
-                        var input = gamepad.GetCurrentReading();
-                        String inputString = input.RightThumbstickX.ToString();
-                        controllerInputTextBlock.Text = inputString;
-
+                        String inputString;
+                        GamepadReading input = gamepad.GetCurrentReading();
+                        controllerInputTextBlock.Text = input.Buttons.ToString();
+                        inputString = input.Buttons.ToString();
                         // Gets the size of UTF-8 string.
                         writer.MeasureString(inputString);
                         // Write a string value to the output stream.
                         writer.WriteString(inputString);
-                        
 
                     });
                 try
@@ -159,11 +156,15 @@ namespace MULE_Controller
                     switch (SocketError.GetStatus(exception.HResult))
                     {
                         case SocketErrorStatus.HostNotFound:
-                            // Handle HostNotFound Error
-                            throw;
+                            socket = null;
+                            writer = null;
+                            centralprogramStatusTextBlock.Text = "MULE Controls Status: Disconnected";
+                            return;
                         default:
-                            // If this is an unknown status it means that the error is fatal and retry will likely fail.
-                            throw;
+                            socket = null;
+                            writer = null;
+                            centralprogramStatusTextBlock.Text = "MULE Controls Status: Disconnected";
+                            return;
                     }
                 }
                 await Task.Delay(TimeSpan.FromMilliseconds(5));
