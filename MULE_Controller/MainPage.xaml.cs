@@ -57,6 +57,8 @@ namespace MULE_Controller
         private StreamSocket socket;
         private DataWriter writer;
         private Gamepad gamepad = null;
+        private double deadZoneNeg = -0.1;
+        private double deadZonePos = 0.1;
 
         public MainPage()
         {
@@ -127,6 +129,8 @@ namespace MULE_Controller
             Gamepad.GamepadAdded += gamepad_Added;
             Gamepad.GamepadRemoved += gamepad_Removed;
 
+
+
             while (true)
             {
                 await Dispatcher.RunAsync(
@@ -139,8 +143,8 @@ namespace MULE_Controller
 
                         String inputString;
                         GamepadReading input = gamepad.GetCurrentReading();
-                        controllerInputTextBlock.Text = input.Buttons.ToString();
-                        inputString = input.Buttons.ToString();
+                        inputString = gamepad_packet_generator(input);
+
                         // Gets the size of UTF-8 string.
                         writer.MeasureString(inputString);
                         // Write a string value to the output stream.
@@ -171,6 +175,75 @@ namespace MULE_Controller
             }
         }
 
+        /* method to generate the controls packet sent to the Central Program */
+        private String gamepad_packet_generator(GamepadReading input)
+        {
+            String packetType = "CNTR|" + input.Timestamp + "|";
+            String buttonString;
+            String[] parsedButtons = null;
+            String returnString = "";
+
+            buttonString = input.Buttons.ToString();
+            parsedButtons = buttonString.Split(new char[] { ',' });
+            foreach(String s in parsedButtons)
+            {
+                returnString += s.Trim() + "|" ;
+            }
+
+            if(input.RightTrigger > 0.0)
+            {
+                returnString += getRightTrigger(input, parsedButtons, "RightTrigger,");
+            }
+            if (input.LeftTrigger > 0.0)
+            {
+                returnString += getLeftTrigger(input, parsedButtons, "LeftTrigger,");
+            }
+
+            if (!(input.RightThumbstickX <= deadZonePos && input.RightThumbstickX >= deadZoneNeg) )
+            {
+                returnString +=  "RightThumbstickX," + input.RightThumbstickX + "|";
+            }
+            if (!(input.RightThumbstickY <= deadZonePos && input.RightThumbstickY >= deadZoneNeg))
+            {
+                returnString += "RightThumbstickY," + input.RightThumbstickX + "|";
+            }
+
+            if (!(input.LeftThumbstickX <= deadZonePos && input.LeftThumbstickX >= deadZoneNeg))
+            {
+                returnString += "LeftThumbstickX," + input.LeftThumbstickX + "|";
+            }
+            if (!(input.LeftThumbstickY <= deadZonePos && input.LeftThumbstickY >= deadZoneNeg))
+            {
+                returnString += "LeftThumbstickY," + input.LeftThumbstickY + "|";
+            }
+
+            return packetType + returnString;
+
+        }
+        
+        /* methods to append trigger information to the controls packet */
+        private String getRightTrigger(GamepadReading input, String[] parsedButtons, String label)
+        {
+            foreach(String s in parsedButtons)
+            {
+                if(s.Equals("RightShoulder"))
+                {
+                    return "";
+                }
+            }
+            return label + input.RightTrigger.ToString() + "|";
+        }
+        private String getLeftTrigger(GamepadReading input, String[] parsedButtons, String label)
+        {
+            foreach (String s in parsedButtons)
+            {
+                if (s.Equals("LeftShoulder"))
+                {
+                    return "";
+                }
+            }
+            return label + input.LeftTrigger.ToString() + "|";
+        }
 
         /* Async methods to deal with when a controller is connected and disconnected while the application is running */
         private async void gamepad_Removed(object sender, Gamepad e)
