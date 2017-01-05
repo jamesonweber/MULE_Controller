@@ -53,6 +53,9 @@ namespace MULE_Controller
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        //String dns = "localhost";
+        String dns = "169.254.49.188"; 
+        String port = "8888"; 
 
         private StreamSocket socket;
         private DataWriter writer;
@@ -77,7 +80,7 @@ namespace MULE_Controller
 
             if (socket == null)
             {
-                await central_program_Connect("localhost", "8888");
+                await central_program_Connect(dns, port);
             }
 
             if (gamepad == null)
