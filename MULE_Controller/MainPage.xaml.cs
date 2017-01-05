@@ -179,7 +179,7 @@ namespace MULE_Controller
         /* method to generate the controls packet sent to the Central Program */
         private String gamepad_packet_generator(GamepadReading input, long packetNumber)
         {
-            String packetType = "CNTR|" + packetNumber.ToString() + "|" + input.Timestamp + "|";
+            String packetMeta = "CNTR|" + packetNumber.ToString() + "|" + input.Timestamp + "|";
             String buttonString;
             String[] parsedButtons = null;
             String returnString = "";
@@ -218,7 +218,7 @@ namespace MULE_Controller
                 returnString += "LeftThumbstickY," + input.LeftThumbstickY + "|";
             }
 
-            return packetType + returnString;
+            return packetMeta + returnString;
 
         }
         
