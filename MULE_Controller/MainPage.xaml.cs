@@ -129,7 +129,7 @@ namespace MULE_Controller
             Gamepad.GamepadAdded += gamepad_Added;
             Gamepad.GamepadRemoved += gamepad_Removed;
 
-
+            long cntrCounter = 0;
 
             while (true)
             {
@@ -143,7 +143,7 @@ namespace MULE_Controller
 
                         String inputString;
                         GamepadReading input = gamepad.GetCurrentReading();
-                        inputString = gamepad_packet_generator(input);
+                        inputString = gamepad_packet_generator(input, cntrCounter);
 
                         // Gets the size of UTF-8 string.
                         writer.MeasureString(inputString);
@@ -172,13 +172,14 @@ namespace MULE_Controller
                     }
                 }
                 await Task.Delay(TimeSpan.FromMilliseconds(5));
+                cntrCounter++;
             }
         }
 
         /* method to generate the controls packet sent to the Central Program */
-        private String gamepad_packet_generator(GamepadReading input)
+        private String gamepad_packet_generator(GamepadReading input, long packetNumber)
         {
-            String packetType = "CNTR|" + input.Timestamp + "|";
+            String packetType = "CNTR|" + packetNumber.ToString() + "|" + input.Timestamp + "|";
             String buttonString;
             String[] parsedButtons = null;
             String returnString = "";
@@ -226,7 +227,7 @@ namespace MULE_Controller
         {
             foreach(String s in parsedButtons)
             {
-                if(s.Equals("RightShoulder"))
+                if(s.Trim().Equals("RightShoulder"))
                 {
                     return "";
                 }
@@ -237,7 +238,7 @@ namespace MULE_Controller
         {
             foreach (String s in parsedButtons)
             {
-                if (s.Equals("LeftShoulder"))
+                if (s.Trim().Equals("LeftShoulder"))
                 {
                     return "";
                 }
