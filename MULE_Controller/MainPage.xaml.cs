@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 using Windows.Gaming.Input;
 using Windows.UI.Core;
@@ -19,6 +8,10 @@ using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
+using Windows.Media.Core;
+using Windows.Storage;
+
+
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -66,7 +59,10 @@ namespace MULE_Controller
         public MainPage()
         {
             this.InitializeComponent();
-            
+            //System.Uri manifestUri = new Uri("http://169.254.49.188:8080/");
+            //System.Uri manifestUri = new Uri("ms-appx:///Assets/ltw.mp4", UriKind.Absolute);.
+            videoPlayer.Source = new Uri(@"C:\ltw.mp4", UriKind.Absolute);
+            videoPlayer.Play();
         }
 
         /* Method to deal with syncing the application with all external dependancies
@@ -78,6 +74,7 @@ namespace MULE_Controller
         private async void connectButton_Click(object sender, RoutedEventArgs e)
         {
 
+
             if (socket == null)
             {
                 await central_program_Connect(dns, port);
@@ -87,10 +84,8 @@ namespace MULE_Controller
             {
                 gamepad_Controls();
             }
-
-
-
         }
+        
 
         /* Method for connecting to the central program of the MULE */
         private async Task central_program_Connect(String hostStr, String port)
@@ -270,6 +265,8 @@ namespace MULE_Controller
                        controllerStatusTextBlock.Text = "Controller Status: Connected";
                    });
         }
+
+
     }
 }
 

@@ -27,6 +27,12 @@
                         <ColumnDefinition Width="70*"  MinWidth="550"/>
                         <ColumnDefinition Width="30*" MinWidth="350"/>
                     </Grid.ColumnDefinitions>
+                    <MediaElement x:Name="videoPlayer" Grid.Column="0" 
+                                        Width="640" Height="480" 
+
+                                         />
+
+
                     <StackPanel Padding="0,25,0,0" Grid.Column="1">
                         <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,15" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
                         
@@ -35,7 +41,6 @@
                         <TextBlock Text="MULE Sensors Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Name="controllerStatusTextBlock" Text="Controller Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <Button Name="connectButton" Width="100" Height="35" Margin="0,10,0,0" Click="connectButton_Click">Sync</Button>
-                        <TextBlock Name="controllerInputTextBlock" Text="Input = "  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         
                     </StackPanel>
                 </Grid>
