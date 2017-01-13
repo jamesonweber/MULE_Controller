@@ -61,7 +61,8 @@ namespace MULE_Controller
             this.InitializeComponent();
             //System.Uri manifestUri = new Uri("http://169.254.49.188:8080/");
             //System.Uri manifestUri = new Uri("ms-appx:///Assets/ltw.mp4", UriKind.Absolute);.
-            videoPlayer.Source = new Uri(@"C:\ltw.mp4", UriKind.Absolute);
+            //videoPlayer.Source = new Uri("http://rdmedia.bbc.co.uk/dash/ondemand/bbb/2/client_manifest-common_init.mpd");
+            videoPlayer.Source = new Uri("http://169.254.49.188:8080/");
             videoPlayer.Play();
         }
 

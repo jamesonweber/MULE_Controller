@@ -27,11 +27,12 @@
                         <ColumnDefinition Width="70*"  MinWidth="550"/>
                         <ColumnDefinition Width="30*" MinWidth="350"/>
                     </Grid.ColumnDefinitions>
-                    <MediaElement x:Name="videoPlayer" Grid.Column="0" 
-                                        Width="640" Height="480" 
-
-                                         />
-
+                    <StackPanel Padding="25,0,0,0" Grid.Column="0">
+                    <MediaElement x:Name="videoPlayer" HorizontalAlignment="Left" 
+                            Width="640"
+                            Height="480"
+                            AreTransportControlsEnabled="True"/>
+                    </StackPanel>
 
                     <StackPanel Padding="0,25,0,0" Grid.Column="1">
                         <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,15" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
