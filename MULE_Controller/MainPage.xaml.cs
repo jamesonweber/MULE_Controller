@@ -56,10 +56,9 @@ namespace MULE_Controller
         private StreamSocket socket;
         private DataWriter writer;
         private Gamepad gamepad = null;
+        private GamepadReading gamepadDelta;
         private double deadZoneNeg = -0.1;
         private double deadZonePos = 0.1;
-
-        private FFmpegInteropMSS FFmpegMSS;
 
         public MainPage()
         {
@@ -75,8 +74,6 @@ namespace MULE_Controller
          */
         private async void connectButton_Click(object sender, RoutedEventArgs e)
         {
-
-
             if (socket == null)
             {
                 await central_program_Connect(dns, port);
@@ -143,6 +140,12 @@ namespace MULE_Controller
 
                         String inputString;
                         GamepadReading input = gamepad.GetCurrentReading();
+
+                        if(input.Equals(gamepadDelta))
+                        {
+                            return;
+                        }
+
                         inputString = gamepad_packet_generator(input, cntrCounter);
 
                         // Gets the size of UTF-8 string.
@@ -150,6 +153,7 @@ namespace MULE_Controller
                         // Write a string value to the output stream.
                         writer.WriteString(inputString);
 
+                        gamepadDelta = input;
                     });
                 try
                 {
@@ -260,6 +264,7 @@ namespace MULE_Controller
         private async void gamepad_Added(object sender, Gamepad e)
         {
             gamepad = e;
+            gamepadDelta = e.GetCurrentReading();
 
             await Dispatcher.RunAsync(
                   CoreDispatcherPriority.Normal, () =>
