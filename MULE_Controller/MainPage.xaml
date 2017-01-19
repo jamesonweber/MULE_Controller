@@ -5,6 +5,7 @@
     xmlns:local="using:MULE_Controller"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vlc="using:VLC"
     mc:Ignorable="d"
 
     >
@@ -27,12 +28,11 @@
                         <ColumnDefinition Width="70*"  MinWidth="550"/>
                         <ColumnDefinition Width="30*" MinWidth="350"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Padding="25,0,0,0" Grid.Column="0">
-                    <MediaElement x:Name="videoPlayer" HorizontalAlignment="Left" 
-                            Width="640"
-                            Height="480"
-                            AreTransportControlsEnabled="True"/>
-                    </StackPanel>
+                    <Grid Padding="25,25,25,25" Grid.Column="0" Width="640" Height="390" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        
+                        <vlc:MediaElement AreTransportControlsEnabled="True" HardwareAcceleration="True" Source=" rtsp://169.254.49.188:8554"> </vlc:MediaElement>
+                        
+                    </Grid>
 
                     <StackPanel Padding="0,25,0,0" Grid.Column="1">
                         <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,15" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />

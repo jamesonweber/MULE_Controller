@@ -11,6 +11,9 @@ using Windows.Storage.Streams;
 using Windows.Media.Core;
 using Windows.Storage;
 
+using FFmpegInterop;
+using Windows.Foundation.Collections;
+
 
 
 
@@ -56,14 +59,12 @@ namespace MULE_Controller
         private double deadZoneNeg = -0.1;
         private double deadZonePos = 0.1;
 
+        private FFmpegInteropMSS FFmpegMSS;
+
         public MainPage()
         {
             this.InitializeComponent();
-            //System.Uri manifestUri = new Uri("http://169.254.49.188:8080/");
-            //System.Uri manifestUri = new Uri("ms-appx:///Assets/ltw.mp4", UriKind.Absolute);.
-            //videoPlayer.Source = new Uri("http://rdmedia.bbc.co.uk/dash/ondemand/bbb/2/client_manifest-common_init.mpd");
-            videoPlayer.Source = new Uri("http://169.254.49.188:8080/");
-            videoPlayer.Play();
+
         }
 
         /* Method to deal with syncing the application with all external dependancies
@@ -170,7 +171,7 @@ namespace MULE_Controller
                             return;
                     }
                 }
-                await Task.Delay(TimeSpan.FromMilliseconds(5));
+                await Task.Delay(TimeSpan.FromMilliseconds(100));
                 cntrCounter++;
             }
         }
