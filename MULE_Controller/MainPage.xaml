@@ -40,7 +40,7 @@
                         <TextBlock Text="Connection"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0"  TextWrapping="Wrap" FontSize="32" />
                         <TextBlock Name="centralprogramStatusTextBlock"  Text="MULE Controls Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Text="MULE Sensors Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        <TextBlock Name="controllerStatusTextBlock" Text="Controller Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
+                        <TextBlock Name="controllerStatusTextBlock" Text="XBOX Controller Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <Button Name="connectButton" Width="100" Height="35" Margin="0,10,0,0" Click="connectButton_Click">Sync</Button>
                         
                     </StackPanel>

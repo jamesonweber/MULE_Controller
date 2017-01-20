@@ -184,6 +184,7 @@ namespace MULE_Controller
         private String gamepad_packet_generator(GamepadReading input, long packetNumber)
         {
             String packetMeta = "CNTR|" + packetNumber.ToString() + "|" + input.Timestamp + "|";
+            String packetEnd = "END|";
             String buttonString;
             String[] parsedButtons = null;
             String returnString = "";
@@ -208,9 +209,17 @@ namespace MULE_Controller
             {
                 returnString +=  "RightThumbstickX," + input.RightThumbstickX + "|";
             }
+            else
+            {
+                returnString += "RightThumbstickX," + 0.0 + "|";
+            }
             if (!(input.RightThumbstickY <= deadZonePos && input.RightThumbstickY >= deadZoneNeg))
             {
-                returnString += "RightThumbstickY," + input.RightThumbstickX + "|";
+                returnString += "RightThumbstickY," + input.RightThumbstickY + "|";
+            }
+            else
+            {
+                returnString += "RightThumbstickY," + 0.0 + "|";
             }
 
             if (!(input.LeftThumbstickX <= deadZonePos && input.LeftThumbstickX >= deadZoneNeg))
@@ -222,7 +231,7 @@ namespace MULE_Controller
                 returnString += "LeftThumbstickY," + input.LeftThumbstickY + "|";
             }
 
-            return packetMeta + returnString;
+            return packetMeta + returnString + packetEnd;
 
         }
         
@@ -258,7 +267,7 @@ namespace MULE_Controller
             await Dispatcher.RunAsync(
                  CoreDispatcherPriority.Normal, () =>
                      {
-                           controllerStatusTextBlock.Text = "Controller Status: Disconnected";
+                           controllerStatusTextBlock.Text = "XBOX Controller Status: Disconnected";
                       });
         }
         private async void gamepad_Added(object sender, Gamepad e)
@@ -269,7 +278,7 @@ namespace MULE_Controller
             await Dispatcher.RunAsync(
                   CoreDispatcherPriority.Normal, () =>
                   {
-                       controllerStatusTextBlock.Text = "Controller Status: Connected";
+                       controllerStatusTextBlock.Text = "XBOX Controller Status: Connected";
                    });
         }
 
