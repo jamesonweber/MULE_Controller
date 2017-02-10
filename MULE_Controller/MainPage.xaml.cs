@@ -204,7 +204,7 @@ namespace MULE_Controller
             {
                 returnString += getLeftTrigger(input, parsedButtons, "LeftTrigger,");
             }
-
+            /*
             if (!(input.RightThumbstickX <= deadZonePos && input.RightThumbstickX >= deadZoneNeg) )
             {
                 returnString +=  "RightThumbstickX," + input.RightThumbstickX + "|";
@@ -221,6 +221,9 @@ namespace MULE_Controller
             {
                 returnString += "RightThumbstickY," + 0.0 + "|";
             }
+            */
+
+            returnString += getServos(input.RightThumbstickX, input.RightThumbstickY);
 
             if (!(input.LeftThumbstickX <= deadZonePos && input.LeftThumbstickX >= deadZoneNeg))
             {
@@ -232,7 +235,64 @@ namespace MULE_Controller
             }
 
             return packetMeta + returnString + packetEnd;
+        }
 
+        private String getServos(double x, double y)
+        {
+            String plot = "";
+            double piDivFour = 0.785398;
+            double piDivTwo = 1.570796;
+            double rightServo = 0.0;
+            double leftServo = 0.0;
+
+            //rightServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
+            //leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
+
+            if ((x > 0) && (y > 0) && (y > x)) // 45-90
+            {
+                rightServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(Math.Atan(y / x) - piDivFour));
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(Math.Atan(y / x) - piDivFour));
+
+            }
+            else if ((x > 0) && (y > 0) && (y < x)) //0-45
+            {
+                rightServo = -  Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
+            }
+            else if ((x < 0) && (y > 0) && (y > Math.Abs(x))) //90-135
+            {
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour + piDivTwo - Math.Atan(y / x)));
+                rightServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour + piDivTwo - Math.Atan(y / x)));
+            }
+            else if ((x < 0) && (y > 0) && (y < Math.Abs(x))) //135-180
+            {
+                rightServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
+                leftServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
+            }
+            else if ((x > 0) && (y < 0) && (Math.Abs(y) < x)) //315-360
+            {
+                rightServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivTwo + Math.Atan(y / x)));
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivTwo + Math.Atan(y / x)));
+            }
+            else if ((x > 0) && (y < 0) && (Math.Abs(y) > x)) //270-315
+            {
+                rightServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour + piDivTwo - Math.Atan(y / x)));
+                leftServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour + piDivTwo - Math.Atan(y / x)));
+            }
+            else if ((x < 0) && (y < 0) && (Math.Abs(y) > Math.Abs(x))) //225-270
+            {
+                rightServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Sin(Math.Atan(y / x) - piDivFour));
+                leftServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(Math.Atan(y / x) - piDivFour));
+            }
+            else if ((x < 0) && (y < 0) && (Math.Abs(y) < Math.Abs(x))) //180-225
+            {
+                rightServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
+                leftServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
+            }
+
+            plot = "ServoL," + leftServo + "|ServoR," + rightServo + "|"; 
+
+            return plot;
         }
         
         /* methods to append trigger information to the controls packet */
