@@ -203,18 +203,27 @@ namespace MULE_Controller
                 returnString += getLeftTrigger(input, parsedButtons, "LeftTrigger,");
             }
 
-            returnString += getServos(input.RightThumbstickX, input.RightThumbstickY);
-
-            if (!(input.LeftThumbstickX <= deadZonePos && input.LeftThumbstickX >= deadZoneNeg))
-            {
-                returnString += "LeftThumbstickX," + input.LeftThumbstickX + "|";
-            }
-            if (!(input.LeftThumbstickY <= deadZonePos && input.LeftThumbstickY >= deadZoneNeg))
-            {
-                returnString += "LeftThumbstickY," + input.LeftThumbstickY + "|";
-            }
+            returnString += getServos(input.RightThumbstickX, input.RightThumbstickY);            
+            returnString += getRStick("LeftThumbstickX", input.LeftThumbstickX);
+            returnString += getRStick("LeftThumbstickY", input.LeftThumbstickY);
 
             return packetMeta + returnString + packetEnd;
+        }
+
+        private String getRStick (String label, double x)
+        {
+            String plot = "";
+            double defaultX = 0.0;
+
+            if (!(x <= deadZonePos && x >= deadZoneNeg)) 
+            {
+                defaultX = x;
+            }
+
+            plot = label + "," + defaultX + "|";
+
+            return plot;
+
         }
 
         // Method to calculate servo angles for controller
@@ -225,8 +234,12 @@ namespace MULE_Controller
             double rightServo = 0.0;
             double leftServo = 0.0;
 
-            rightServo = (x * Math.Cos(piDivFour)) - (y * Math.Sin(piDivFour));
-            leftServo = (x * Math.Sin(piDivFour)) + (y * Math.Cos(piDivFour));
+            if ((!(x <= deadZonePos && x >= deadZoneNeg))
+                || (!(y <= deadZonePos && y >= deadZoneNeg)))
+            {
+                rightServo = (x * Math.Cos(piDivFour)) - (y * Math.Sin(piDivFour));
+                leftServo = (x * Math.Sin(piDivFour)) + (y * Math.Cos(piDivFour));
+            }
 
             plot = "ServoL," + leftServo + "|ServoR," + rightServo + "|"; 
 
