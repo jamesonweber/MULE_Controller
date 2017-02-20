@@ -248,46 +248,45 @@ namespace MULE_Controller
             //rightServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
             //leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
 
-            if ((x > 0) && (y > 0) && (y > x)) // 45-90
+            if ((x > 0) && (y > 0) && (y < x)) //0-45
             {
-                rightServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(Math.Atan(y / x) - piDivFour));
-                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(Math.Atan(y / x) - piDivFour));
-
-            }
-            else if ((x > 0) && (y > 0) && (y < x)) //0-45
-            {
-                rightServo = -  Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
                 leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
+                rightServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
+            }
+            else if ((x > 0) && (y > 0) && (y > x)) // 45-90
+            {
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(Math.Atan(y / x) - piDivFour));
+                rightServo = -Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(x / y)));
             }
             else if ((x < 0) && (y > 0) && (y > Math.Abs(x))) //90-135
             {
-                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour + piDivTwo - Math.Atan(y / x)));
-                rightServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour + piDivTwo - Math.Atan(y / x)));
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(Math.Abs(x) / y)));
+                rightServo = -Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(Math.Abs(x) / y)));
             }
             else if ((x < 0) && (y > 0) && (y < Math.Abs(x))) //135-180
             {
-                rightServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
-                leftServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
-            }
-            else if ((x > 0) && (y < 0) && (Math.Abs(y) < x)) //315-360
-            {
-                rightServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivTwo + Math.Atan(y / x)));
-                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivTwo + Math.Atan(y / x)));
-            }
-            else if ((x > 0) && (y < 0) && (Math.Abs(y) > x)) //270-315
-            {
-                rightServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour + piDivTwo - Math.Atan(y / x)));
-                leftServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour + piDivTwo - Math.Atan(y / x)));
-            }
-            else if ((x < 0) && (y < 0) && (Math.Abs(y) > Math.Abs(x))) //225-270
-            {
-                rightServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Sin(Math.Atan(y / x) - piDivFour));
-                leftServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(Math.Atan(y / x) - piDivFour));
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / Math.Abs(x))));
+                rightServo = -Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / Math.Abs(x))));
             }
             else if ((x < 0) && (y < 0) && (Math.Abs(y) < Math.Abs(x))) //180-225
             {
-                rightServo = Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
-                leftServo = - Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
+                rightServo = -Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
+            }
+            else if ((x < 0) && (y < 0) && (Math.Abs(y) > Math.Abs(x))) //225-270
+            {
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(y / x)));
+                rightServo = -Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(y / x)));
+            }
+            else if ((x > 0) && (y < 0) && (Math.Abs(y) > Math.Abs(x))) //270-315
+            {
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(x / Math.Abs(y))));
+                rightServo = -Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(x / Math.Abs(y))));
+            }
+            else if ((x > 0) && (y < 0) && (Math.Abs(y) < Math.Abs(x))) //315-360
+            {
+                leftServo = Math.Sqrt((x * x) + (y * y)) * (Math.Cos(piDivFour - Math.Atan(Math.Abs(y) / x)));
+                rightServo = -Math.Sqrt((x * x) + (y * y)) * (Math.Sin(piDivFour - Math.Atan(Math.Abs(y) / x)));
             }
 
             plot = "ServoL," + leftServo + "|ServoR," + rightServo + "|"; 
