@@ -28,9 +28,9 @@
                         <ColumnDefinition Width="70*"  MinWidth="550"/>
                         <ColumnDefinition Width="30*" MinWidth="350"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Padding="25,25,25,25" Grid.Column="0" Width="640" Height="390" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        
-                        <vlc:MediaElement AreTransportControlsEnabled="True" HardwareAcceleration="True" Source=" rtsp://169.254.49.188:8554"> </vlc:MediaElement>
+                    <Grid Padding="25,25,25,25" Grid.Column="0"  Width="640" Height="390" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                        <vlc:MediaElement AreTransportControlsEnabled="True" HardwareAcceleration="True" Source="http://169.254.49.188:8090/"> </vlc:MediaElement>
                         
                     </Grid>
 
@@ -61,10 +61,6 @@
                         <TextBlock Text="Sensor Information"  Grid.Column="1" Grid.Row="0" Padding="0,15,0,0"  TextWrapping="Wrap" FontSize="32" />
                         <TextBlock Text="Module 1:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Text="Module 2:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        <TextBlock Text="Module 3:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        <TextBlock Text="Module 4:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        <TextBlock Text="Module 5:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        <TextBlock Text="Module 6:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                     </StackPanel>
                     
                     <StackPanel Padding="25,0,0,0" MaxWidth="500" MinWidth="500" HorizontalAlignment="Left" Grid.Column="0">

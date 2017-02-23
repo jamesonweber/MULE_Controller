@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
-using Windows.Media.Core;
-using Windows.Storage;
-using System.Numerics;
 
 
 

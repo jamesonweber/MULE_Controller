@@ -1,8 +1,7 @@
 ﻿{
   "dependencies": {
-    "FFmpegInterop.UWP": "1.0.3",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-    "VLC.MediaElement": "0.9.7"
+    "VLC.MediaElement": "0.9.8"
   },
   "frameworks": {
     "uap10.0": {}
