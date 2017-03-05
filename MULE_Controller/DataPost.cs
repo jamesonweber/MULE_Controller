@@ -31,36 +31,57 @@ namespace MULE_Controller
 
     class DataPost
     {
+        int sensor { get; set; }
+        String description { get; set; }
 
-        String description;
-
-        private String dataType;
-        private float sem;
-        private String value;
-        private float longitude;
-        private float latitude;
-        private float northings;
-        private float eastings;
-        private float depth;
-        private String datetime;
-        private String[] detailsValues = new String[10];
-
-        public DataPost(int sensor, String description, String dataType, float sem, String value, float longitude, float latitude,
-            float northings, float eastings, float depth, String datetime, String[] detailsValues)
+        public String serial { get; set; }
+        public String dataType { get; set; }
+        public String metaData { get; set; }
+        public float sem { get; set; }
+        public float sd { get; set; }
+        public float avg { get; set; }
+        public int[] detailsValues { get; set; }
+        public float northings { get; set; }
+        public float eastings { get; set; }
+        public float depth { get; set; }
+        public String datetime { get; set; }
+        /*
+        public DataPost(int sensor, String serial, String dataType, String metaData, float sem, float sd, float avg, int[] detailsValues,
+            float northings, float eastings, float depth, String datetime)
         {
-            this.description = description;
+            this.sensor = sensor;
+            this.serial = serial;
             this.dataType = dataType;
+            this.metaData = metaData;
             this.sem = sem;
-            this.value = value;
-            this.longitude = longitude;
-            this.latitude = latitude;
+            this.sd = sd;
+            this.avg = avg;
+            this.detailsValues = detailsValues;
             this.northings = northings;
             this.eastings = eastings;
             this.depth = depth;
             this.datetime = datetime;
-            this.detailsValues = detailsValues;
         }
+        */
 
+        
+
+        public void setDataPost(int sensor, String serial, String dataType, String metaData, float sem, float sd, float avg, int[] detailsValues,
+            float northings, float eastings, float depth, String datetime)
+        {
+            this.sensor = sensor;
+            this.serial = serial;
+            this.dataType = dataType;
+            this.metaData = metaData;
+            this.sem = sem;
+            this.sd = sd;
+            this.avg = avg;
+            this.detailsValues = detailsValues;
+            this.northings = northings;
+            this.eastings = eastings;
+            this.depth = depth;
+            this.datetime = datetime;
+        }
 
 
     }

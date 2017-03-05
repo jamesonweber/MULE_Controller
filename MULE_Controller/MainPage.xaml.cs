@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
+using System.Text;
+using System.IO;
 
 
 
@@ -44,16 +46,24 @@ namespace MULE_Controller
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        //String dns = "localhost";
-        String dns = "169.254.49.188"; 
-        String port = "8888"; 
+        //String dns = "169.254.49.188"; 
+        String dns = "192.168.1.79";
+        String port = "8888";
+
+        String dataport = "8889";
 
         private StreamSocket socket;
         private DataWriter writer;
+
+        private StreamSocket datasocket;
+
         private Gamepad gamepad = null;
         private GamepadReading gamepadDelta;
         private double deadZoneNeg = -0.1;
         private double deadZonePos = 0.1;
+
+        DataPost s1 = new DataPost();
+        DataPost s2 = new DataPost();
 
         public MainPage()
         {
@@ -71,7 +81,13 @@ namespace MULE_Controller
         {
             if (socket == null)
             {
-                await central_program_Connect(dns, port);
+                //await central_program_Connect(dns, port);
+            }
+
+            if (datasocket == null)
+            {
+                await data_program_Connect(dns, dataport);
+                collect_display_modules();
             }
 
             if (gamepad == null)
@@ -79,7 +95,165 @@ namespace MULE_Controller
                 gamepad_Controls();
             }
         }
-        
+
+        /* Method to manage the recieving of module information from the data program */
+        private async void collect_display_modules()
+        {
+
+            String packet = null;
+            String initialModule;
+            String[] splitPacket = null;
+            String[] splitDetails;
+            int[] splitDetailsInt = new int[10];
+            String[] splitPos;
+            float[] splitPosFloat = new float[3];
+
+            int sensor;
+            String serial;
+            String dataType;
+            String metaData;
+            float sem;
+            float sd;
+            float avg;
+            int[] detailsValues;
+            float northings;
+            float eastings;
+            float depth;
+            String datetime;
+
+            while(packet == null)
+            {
+                packet = await data_program_read();                
+            }
+            
+            splitPacket = packet.Split(new char[] { '|' });
+            splitDetails = splitPacket[9].Split(new char[] { ',' });
+            for(int i = 0; i<10; i++)
+            {
+                splitDetailsInt[i] = Convert.ToInt32(splitDetails[i]);
+            }
+            splitPos = splitPacket[10].Split(new char[] { ',' });
+            for (int i = 0; i<3; i++)
+            {
+                splitPosFloat[i] = float.Parse(splitPos[i]);
+            }
+
+
+            initialModule = splitPacket[1]+splitPacket[3];
+
+            sensor = 1;
+            serial = splitPacket[3];
+            dataType = splitPacket[5];
+            metaData = splitPacket[2];
+            sem = float.Parse(splitPacket[7]);
+            sd = float.Parse(splitPacket[6]);
+            avg = float.Parse(splitPacket[8]);
+            detailsValues = splitDetailsInt;
+            northings = splitPosFloat[0];
+            eastings = splitPosFloat[1];
+            depth = splitPosFloat[2];
+            datetime = splitPacket[11];
+
+            s1.setDataPost(sensor, serial, dataType, metaData, sem, sd, avg, detailsValues, 
+                northings, eastings, depth, datetime);
+
+            module1Display.Text = "Module 1: " + s1.metaData + " " + s1.avg + " " + s1.dataType;
+            northingsDisplay.Text = "Northings: " + s1.northings;
+            eastingsDisplay.Text = "Eastings: " + s1.eastings;
+            depthDisplay.Text = "Depth: " + s1.depth + " M";
+
+            while (true)
+            {
+
+                packet = await data_program_read();
+
+                splitPacket = packet.Split(new char[] { '|' });
+                splitDetails = splitPacket[9].Split(new char[] { ',' });
+                for (int i = 0; i < 10; i++)
+                {
+                    splitDetailsInt[i] = Convert.ToInt32(splitDetails[i]);
+                }
+                splitPos = splitPacket[10].Split(new char[] { ',' });
+                for (int i = 0; i < 3; i++)
+                {
+                    splitPosFloat[i] = float.Parse(splitPos[i]);
+                }
+                initialModule = splitPacket[1] + splitPacket[3];
+
+                sensor = 1;
+                serial = splitPacket[3];
+                dataType = splitPacket[5];
+                metaData = splitPacket[2];
+                sem = float.Parse(splitPacket[7]);
+                sd = float.Parse(splitPacket[6]);
+                avg = float.Parse(splitPacket[8]);
+                detailsValues = splitDetailsInt;
+                northings = splitPosFloat[0];
+                eastings = splitPosFloat[1];
+                depth = splitPosFloat[2];
+                datetime = splitPacket[11];
+
+                if(initialModule.Equals(splitPacket[1] + splitPacket[3]))
+                {
+                    s1.setDataPost(sensor, serial, dataType, metaData, sem, sd, avg, detailsValues,
+                    northings, eastings, depth, datetime);
+                    module1Display.Text = "Module 1: " + s1.metaData + " " + s1.avg + " " + s1.dataType;
+                }
+                else
+                {
+                    s2.setDataPost(sensor, serial, dataType, metaData, sem, sd, avg, detailsValues,
+                    northings, eastings, depth, datetime);
+                    module2Display.Text = "Module 1: " + s1.metaData + " " + s1.avg + " " + s1.dataType;
+                }
+                northingsDisplay.Text = "Northings: " + s1.northings;
+                eastingsDisplay.Text = "Eastings: " + s1.eastings;
+                depthDisplay.Text = "Depth: " + s1.depth + " M";
+
+            }
+
+        }
+
+        /* Method to read data program packets */
+        private async Task<String> data_program_read()
+        {
+            Stream streamIn = datasocket.InputStream.AsStreamForRead();
+            StreamReader reader = new StreamReader(streamIn);
+            String response = await reader.ReadLineAsync();
+            return response;
+        }
+
+        /* Method for connecting to the data program of the MULE */
+        private async Task data_program_Connect(String hostStr, String port)
+        {
+            datasocket = new StreamSocket();
+            HostName host = new HostName(hostStr);
+            try
+            {
+                // Connect to the server
+                await datasocket.ConnectAsync(host, port);
+
+            }
+            catch (Exception exception)
+            {
+                switch (SocketError.GetStatus(exception.HResult))
+                {
+                    case SocketErrorStatus.HostNotFound:
+                        // Handle HostNotFound Error
+                        throw;
+                    default:
+                        // If this is an unknown status it means that the error is fatal and retry will likely fail.
+                        throw;
+                }
+            }
+            dataprogramStatusTextBlock.Text = "MULE Controls Status: Connected";
+
+            Stream streamOut = datasocket.OutputStream.AsStreamForWrite();
+            StreamWriter writer = new StreamWriter(streamOut);
+            string request = "handshake";
+            await writer.WriteLineAsync(request);
+            await writer.FlushAsync();
+
+        }
 
         /* Method for connecting to the central program of the MULE */
         private async Task central_program_Connect(String hostStr, String port)
