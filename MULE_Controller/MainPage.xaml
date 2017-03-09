@@ -9,18 +9,55 @@
     mc:Ignorable="d"
 
     >
+
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-    <!-- Main container grid -->
-    <Grid x:Name="MainGrid"  Background="White"  >
-        <!-- Rows grid -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10*" MinHeight="350"/>
-                <RowDefinition Height="10*"/>
-            </Grid.RowDefinitions>
+        <!-- Main container grid -->
+        <Grid x:Name="MainGrid"  Background="White"  >
+            <Grid >
+                <SplitView  x:Name="hamburgerMenu" HorizontalAlignment="Stretch" OpenPaneLength="150" DisplayMode="CompactInline" IsPaneOpen="True">
+                    <SplitView.Pane>
+                        <Grid Padding="0,15,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
+                                <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xE700;" TextAlignment="Center" Padding="5"  />
+                                <TextBlock Text="MENU" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0"/>
+                            </StackPanel>
+                            <Grid Grid.Row="1" x:Name="btmtp" VerticalAlignment="Top">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Button x:Name="TasksButton" Style="{StaticResource TextBlockButtonStyle}" Grid.Row="1" VerticalAlignment="Stretch" Click="TasksButton_Click">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xE10F;" TextAlignment="Center" Padding="5"  />
+                                        <TextBlock Text="Home" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="OnlineButton" Style="{StaticResource TextBlockButtonStyle}" Grid.Row="2" VerticalAlignment="Top" Click="OnlineButton_Click">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xE12B;" TextAlignment="Center" Margin="5" />
+                                        <TextBlock Text="Online" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </SplitView.Pane>
+                </SplitView>
+            </Grid>
+
+            <!-- Rows grid -->
+            <Grid Padding="150,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*" MinHeight="350"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
 
                 <!-- Row 1 Grid - Col 1 = Video Display Col 2 = Title and Location -->
                 <Grid Grid.Column="1" Grid.Row="0">
@@ -30,19 +67,19 @@
                     </Grid.ColumnDefinitions>
                     <Grid Padding="25,25,25,25" Grid.Column="0"  Width="640" Height="390" HorizontalAlignment="Left" VerticalAlignment="Top">
 
-                        <vlc:MediaElement AreTransportControlsEnabled="True" HardwareAcceleration="True" Source="http://169.254.49.188:8090/"> </vlc:MediaElement>
-                        
+                        <vlc:MediaElement AreTransportControlsEnabled="True" HardwareAcceleration="True" Source="http://169.254.49.188:8090/"></vlc:MediaElement>
+
                     </Grid>
 
                     <StackPanel Padding="0,25,0,0" Grid.Column="1">
                         <TextBlock Text="MULE Controller"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,15" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
-                        
+
                         <TextBlock Text="Connection"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0"  TextWrapping="Wrap" FontSize="32" />
                         <TextBlock Name="centralprogramStatusTextBlock"  Text="MULE Controls Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Name ="dataprogramStatusTextBlock" Text="MULE Sensors Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Name="controllerStatusTextBlock" Text="XBOX Controller Status: Disconnected"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <Button Name="connectButton" Width="100" Height="35" Margin="0,10,0,0" Click="connectButton_Click">Sync</Button>
-                        
+
                     </StackPanel>
                 </Grid>
 
@@ -57,12 +94,12 @@
                         <TextBlock Name="northingsDisplay" Text="Northings:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Name="eastingsDisplay" Text="Eastings:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Name="depthDisplay" Text="Depth:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
-                        
+
                         <TextBlock Text="Sensor Information"  Grid.Column="1" Grid.Row="0" Padding="0,15,0,0"  TextWrapping="Wrap" FontSize="32" />
                         <TextBlock Name="module1Display" Text="Module 1:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                         <TextBlock Name="module2Display" Text="Module 2:"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0" FontSize="20" />
                     </StackPanel>
-                    
+
                     <StackPanel Padding="25,0,0,0" MaxWidth="500" MinWidth="500" HorizontalAlignment="Left" Grid.Column="0">
                         <TextBlock Text="Data Post"  Grid.Column="1" Grid.Row="0" Padding="0,0,0,0"  TextWrapping="Wrap" FontSize="32" />
                         <TextBlock Text="Sensor: "  Padding="0,0,0,0" FontSize="20" />
@@ -70,17 +107,17 @@
                         <TextBlock Text="Description: "  Padding="0,10,0,0" FontSize="20" />
                         <TextBox Height="100" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
                         <StackPanel Orientation="Horizontal">
-                            <Button Width="100" Height="35" Margin="0,10,0,0">Post</Button>
-                            <Button Width="100" Height="35" Margin="10,10,0,0">View Queue</Button>
+                            <Button Width="100" Height="60" Margin="0,10,0,0">
+                                <TextBlock Text="Queue for Online" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Button>
                         </StackPanel>
                     </StackPanel>
-
                 </Grid>
 
 
+            </Grid>
+
+
         </Grid>
-
-
-    </Grid>
     </ScrollViewer>
 </Page>

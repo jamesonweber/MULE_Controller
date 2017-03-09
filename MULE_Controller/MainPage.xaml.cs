@@ -14,6 +14,7 @@ using System.IO;
 
 
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 /*******************************
@@ -21,6 +22,7 @@ using System.IO;
 * ******************************
 * https://sandervandevelde.wordpress.com/2016/03/18/control-your-arduino-rover-using-firmata-and-xbox-one-controller/
 * http://donatas.xyz/streamsocket-tcpip-client.html
+* http://stackoverflow.com/questions/39401969/uwp-navigation-pane-issues
 * ******************************
 * Documentation
 * ******************************
@@ -68,7 +70,7 @@ namespace MULE_Controller
         public MainPage()
         {
             this.InitializeComponent();
-
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
         /* Method to deal with syncing the application with all external dependancies
@@ -464,7 +466,15 @@ namespace MULE_Controller
                    });
         }
 
+        private void OnlineButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Login));
+        }
 
+        private void TasksButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
     }
 }
 
