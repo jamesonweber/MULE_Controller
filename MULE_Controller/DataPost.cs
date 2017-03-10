@@ -29,7 +29,7 @@ namespace MULE_Controller
 {
 
 
-    class DataPost
+    public class DataPost
     {
         int sensor { get; set; }
         String description { get; set; }

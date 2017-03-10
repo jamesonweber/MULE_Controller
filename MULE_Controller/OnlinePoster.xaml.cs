@@ -26,5 +26,21 @@ namespace MULE_Controller
         {
             this.InitializeComponent();
         }
+
+        private void OnlineButton_Click(object sender, RoutedEventArgs e)
+        {
+            if ((App.Current as App).isLoggedIn == true)
+            {
+                this.Frame.Navigate(typeof(OnlinePoster));
+            }
+            else {
+                this.Frame.Navigate(typeof(Login));
+            }
+        }
+
+        private void TasksButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
     }
 }

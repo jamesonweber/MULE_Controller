@@ -107,7 +107,7 @@
                         <TextBlock Text="Description: "  Padding="0,10,0,0" FontSize="20" />
                         <TextBox Height="100" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
                         <StackPanel Orientation="Horizontal">
-                            <Button Width="100" Height="60" Margin="0,10,0,0">
+                            <Button Width="100" Height="60" Margin="0,10,0,0" Click="queueButton_Click">
                                 <TextBlock Text="Queue for Online" TextWrapping="Wrap" TextAlignment="Center"/>
                             </Button>
                         </StackPanel>

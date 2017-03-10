@@ -22,6 +22,10 @@ namespace MULE_Controller
     /// </summary>
     sealed partial class App : Application
     {
+
+        public bool isLoggedIn { get; set; }
+        public List<DataPost> dpList;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -47,6 +51,11 @@ namespace MULE_Controller
             }
 #endif
             Frame rootFrame = Window.Current.Content as Frame;
+
+            if(dpList == null)
+            {
+                dpList = new List<DataPost>();
+            }
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active

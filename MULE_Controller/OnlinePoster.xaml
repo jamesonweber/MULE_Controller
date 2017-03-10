@@ -7,7 +7,45 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="White">
+        <Grid >
+            <SplitView  x:Name="hamburgerMenu" HorizontalAlignment="Stretch" OpenPaneLength="150" DisplayMode="CompactInline" IsPaneOpen="True">
+                <SplitView.Pane>
+                    <Grid Padding="0,15,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
+                            <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xE700;" TextAlignment="Center" Padding="5"  />
+                            <TextBlock Text="MENU" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0"/>
+                        </StackPanel>
+                        <Grid Grid.Row="1" x:Name="btmtp" VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Button x:Name="TasksButton" Style="{StaticResource TextBlockButtonStyle}" Grid.Row="1" Click="TasksButton_Click">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xE10F;" TextAlignment="Center" Padding="5"  />
+                                    <TextBlock Text="Home" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="OnlineButton" Style="{StaticResource TextBlockButtonStyle}" Grid.Row="2" VerticalAlignment="Top" Click="OnlineButton_Click">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xE12B;" TextAlignment="Center" Margin="5" />
+                                    <TextBlock Text="Online" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </SplitView.Pane>
+            </SplitView>
+        </Grid>
+        <Grid Name="MainGrid" Padding="175,0,0,0">
+            
+        </Grid>
 
     </Grid>
 </Page>

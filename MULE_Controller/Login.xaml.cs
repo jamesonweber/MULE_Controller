@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Cryptography;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -30,7 +32,14 @@ namespace MULE_Controller
 
         private void OnlineButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Login));
+            if ((App.Current as App).isLoggedIn == true)
+            {
+                this.Frame.Navigate(typeof(OnlinePoster));
+            }
+            else
+            {
+                this.Frame.Navigate(typeof(Login));
+            }
         }
 
         private void TasksButton_Click(object sender, RoutedEventArgs e)
@@ -38,9 +47,38 @@ namespace MULE_Controller
             this.Frame.Navigate(typeof(MainPage));
         }
 
-        private void loginButton_Click(object sender, RoutedEventArgs e)
+        private async void loginButton_Click(object sender, RoutedEventArgs e)
         {
+            string dbpass = null;
+            muleServiceReference.Service1Client msr = new muleServiceReference.Service1Client();
+            dbpass = await msr.checkLoginAsync(usernameText.Text);
+            if(dbpass.Equals(sha256_hash(passwordText.Password)))
+            {
+                (App.Current as App).isLoggedIn = true;
+                errorText.Text = "";
+                this.Frame.Navigate(typeof(OnlinePoster));
+            }
+            else
+            {
+                errorText.Text = "Invalid username or password.";
+            }
+            
+        }
 
+        public static String sha256_hash(String value)
+        {
+            StringBuilder Sb = new StringBuilder();
+
+            using (SHA256 hash = SHA256.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                Byte[] result = hash.ComputeHash(enc.GetBytes(value));
+
+                foreach (Byte b in result)
+                    Sb.Append(b.ToString("x2"));
+            }
+
+            return Sb.ToString();
         }
     }
 }

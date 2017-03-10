@@ -10,6 +10,7 @@ using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using System.Text;
 using System.IO;
+using System.Collections.Generic;
 
 
 
@@ -49,10 +50,11 @@ namespace MULE_Controller
     public sealed partial class MainPage : Page
     {
         //String dns = "169.254.49.188"; 
-        String dns = "192.168.1.79";
-        String port = "8888";
 
-        String dataport = "8889";
+        private String dns = "192.168.1.10";
+        private String port = "8888";
+
+        private String dataport = "8889";
 
         private StreamSocket socket;
         private DataWriter writer;
@@ -64,8 +66,10 @@ namespace MULE_Controller
         private double deadZoneNeg = -0.1;
         private double deadZonePos = 0.1;
 
-        DataPost s1 = new DataPost();
-        DataPost s2 = new DataPost();
+        private DataPost s1 = new DataPost();
+        private DataPost s2 = new DataPost();
+
+        
 
         public MainPage()
         {
@@ -468,12 +472,25 @@ namespace MULE_Controller
 
         private void OnlineButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Login));
+            if((App.Current as App).isLoggedIn==true)
+            {
+                this.Frame.Navigate(typeof(OnlinePoster));
+            }
+            else
+            {
+                this.Frame.Navigate(typeof(Login));
+            }
+            
         }
 
         private void TasksButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void queueButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
