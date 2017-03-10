@@ -44,7 +44,11 @@
             </SplitView>
         </Grid>
         <Grid Name="MainGrid" Padding="175,0,0,0">
-            
+            <StackPanel Padding="0,25,0,0" Grid.Column="1">
+                <StackPanel Name="uidpList" Grid.Column="1">
+                    <TextBlock Text="Post Queue to Website"  Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
+                </StackPanel>
+            </StackPanel>
         </Grid>
 
     </Grid>

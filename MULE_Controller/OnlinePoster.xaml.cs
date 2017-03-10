@@ -15,6 +15,9 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
+//Reference
+//https://social.msdn.microsoft.com/Forums/vstudio/en-US/531f8bc7-4d62-464a-8180-beddaa46cb7d/programatically-adding-items-to-stackpanel?forum=wpf
+
 namespace MULE_Controller
 {
     /// <summary>
@@ -25,6 +28,24 @@ namespace MULE_Controller
         public OnlinePoster()
         {
             this.InitializeComponent();
+
+            if((App.Current as App).dpList.Count() != 0)
+            {
+                Button btn = new Button();
+                btn.Content = "Upload";
+                uidpList.Children.Add(btn);
+            }
+            foreach(DataPost dp in (App.Current as App).dpList)
+            {
+                TextBlock title = new TextBlock();
+                title.Text = "Module " + dp.sensor;
+                uidpList.Children.Add(title);
+                TextBlock avg = new TextBlock();
+                title.Text = "Average:  " + dp.avg;
+                uidpList.Children.Add(avg);
+
+            }
+            
         }
 
         private void OnlineButton_Click(object sender, RoutedEventArgs e)

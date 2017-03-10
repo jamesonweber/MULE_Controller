@@ -45,7 +45,7 @@
         </Grid>
         <Grid Padding="175,0,0,0">
             <StackPanel>
-                <TextBlock Text="Sign In" Padding="0,0,0,25"  TextWrapping="Wrap" FontSize="32" />
+                <TextBlock Text="Sign In"  Padding="0,0,0,15" TextWrapping="Wrap" FontWeight="Bold" FontSize="40" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Padding="0,0,6,0">Username:</TextBlock>
                     <TextBox Name="usernameText" Width="400" />

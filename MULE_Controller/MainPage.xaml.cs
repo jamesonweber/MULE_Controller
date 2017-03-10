@@ -201,14 +201,22 @@ namespace MULE_Controller
 
                 if(initialModule.Equals(splitPacket[1] + splitPacket[3]))
                 {
-                    s1.setDataPost(sensor, serial, dataType, metaData, sem, sd, avg, detailsValues,
-                    northings, eastings, depth, datetime);
+                    lock(s1)
+                    {
+                        s1.setDataPost(sensor, serial, dataType, metaData, sem, sd, avg, detailsValues,
+                            northings, eastings, depth, datetime);
+                    }
+                    
                     module1Display.Text = "Module 1: " + s1.metaData + " " + s1.avg + " " + s1.dataType;
                 }
                 else
                 {
-                    s2.setDataPost(sensor, serial, dataType, metaData, sem, sd, avg, detailsValues,
-                    northings, eastings, depth, datetime);
+                    lock(s2)
+                    {
+                        s2.setDataPost(sensor, serial, dataType, metaData, sem, sd, avg, detailsValues,
+                            northings, eastings, depth, datetime);
+                    }
+                    
                     module2Display.Text = "Module 1: " + s1.metaData + " " + s1.avg + " " + s1.dataType;
                 }
                 northingsDisplay.Text = "Northings: " + s1.northings;
@@ -490,7 +498,22 @@ namespace MULE_Controller
 
         private void queueButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if(sensorCombo.SelectedValue.Equals("Module 1"))
+            {
+                lock(s1)
+                {
+                    s1.description = descriptionText.Text;
+                    (App.Current as App).dpList.Add(s1);
+                }
+            }
+            else if (sensorCombo.SelectedValue.Equals("Module 2"))
+            {
+                lock (s2)
+                {
+                    s2.description = descriptionText.Text;
+                    (App.Current as App).dpList.Add(s2);
+                }
+            }
         }
     }
 }

@@ -31,8 +31,8 @@ namespace MULE_Controller
 
     public class DataPost
     {
-        int sensor { get; set; }
-        String description { get; set; }
+        public int sensor { get; set; }
+        public String description { get; set; }
 
         public String serial { get; set; }
         public String dataType { get; set; }
@@ -45,24 +45,6 @@ namespace MULE_Controller
         public float eastings { get; set; }
         public float depth { get; set; }
         public String datetime { get; set; }
-        /*
-        public DataPost(int sensor, String serial, String dataType, String metaData, float sem, float sd, float avg, int[] detailsValues,
-            float northings, float eastings, float depth, String datetime)
-        {
-            this.sensor = sensor;
-            this.serial = serial;
-            this.dataType = dataType;
-            this.metaData = metaData;
-            this.sem = sem;
-            this.sd = sd;
-            this.avg = avg;
-            this.detailsValues = detailsValues;
-            this.northings = northings;
-            this.eastings = eastings;
-            this.depth = depth;
-            this.datetime = datetime;
-        }
-        */
 
         
 
