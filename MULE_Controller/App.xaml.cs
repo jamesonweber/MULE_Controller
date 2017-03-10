@@ -26,6 +26,7 @@ namespace MULE_Controller
         public bool isLoggedIn { get; set; }
         public List<DataPost> dpList;
         public bool uploaded { get; set; }
+        public String userName { get; set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

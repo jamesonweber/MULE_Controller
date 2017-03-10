@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Text;
@@ -28,16 +29,30 @@ namespace MULE_Controller
     public sealed partial class OnlinePoster : Page
     {
 
+        ComboBox groupCombo;
+
         public OnlinePoster()
         {
             this.InitializeComponent();
+            setUpUI();
+        }
 
-            if((App.Current as App).dpList.Count() != 0)
+        private async void setUpUI()
+        {
+            if ((App.Current as App).dpList.Count() != 0)
             {
                 Button btn = new Button();
                 btn.Content = "Upload";
                 btn.Click += upload_Click;
                 uidpList.Children.Add(btn);
+
+                TextBlock gtitle = new TextBlock();
+                gtitle.FontWeight = FontWeights.Bold;
+                gtitle.Padding = new Thickness(0, 25, 0, 0);
+                gtitle.Text = "Select a group to add posts to";
+                uidpList.Children.Add(gtitle);
+
+                await setGroupCombo();
             }
             else if (!(App.Current as App).uploaded)
             {
@@ -66,17 +81,44 @@ namespace MULE_Controller
                 TextBlock location = new TextBlock();
                 location.Text = "Location: " + dp.northings + "N, " + dp.eastings + "E, " + dp.depth + "M";
                 uidpList.Children.Add(location);
-                if (!dp.description.Equals("")) { 
+                if (!dp.description.Equals(""))
+                {
                     TextBlock desc = new TextBlock();
                     desc.Text = "Description: " + dp.description;
                     uidpList.Children.Add(desc);
                 }
             }
-            
         }
 
-        private void upload_Click(object sender, RoutedEventArgs e)
+
+        private async Task setGroupCombo()
         {
+            muleServiceReference.Service1Client msr = new muleServiceReference.Service1Client();
+            var groups = await msr.getGroupsAsync((App.Current as App).userName);
+
+            groupCombo = new ComboBox();
+            groupCombo.MinWidth = 400;
+
+            foreach(var g in groups)
+            {
+                groupCombo.Items.Add(g);
+            }
+
+            uidpList.Children.Add(groupCombo);
+        }
+
+        private async void upload_Click(object sender, RoutedEventArgs e)
+        {
+            String uname = (App.Current as App).userName;
+            String group = groupCombo.SelectionBoxItem.ToString();
+            muleServiceReference.Service1Client msr = new muleServiceReference.Service1Client();
+            foreach(var dp in (App.Current as App).dpList)
+            {
+                bool result = await msr.uploadPostsAsync(new muleServiceReference.DataPost { sensor = dp.sensor, serial = dp.serial, user_name = uname, group_name = group,
+                    dataType = dp.dataType, metaData = dp.metaData, sem = dp.sem, sd = dp.sd, avg = dp.avg, detailsValues = null,
+                            northings = dp.northings, eastings = dp.eastings, depth = dp.depth, datetime = dp.datetime });
+            }
+
             (App.Current as App).dpList = null;
             (App.Current as App).dpList = new List<DataPost>();
             (App.Current as App).uploaded = true;

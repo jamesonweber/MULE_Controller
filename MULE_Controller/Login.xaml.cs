@@ -50,11 +50,13 @@ namespace MULE_Controller
         private async void loginButton_Click(object sender, RoutedEventArgs e)
         {
             string dbpass = null;
+            errorText.Text = "Signing In...";
             muleServiceReference.Service1Client msr = new muleServiceReference.Service1Client();
             dbpass = await msr.checkLoginAsync(usernameText.Text);
             if(dbpass.Equals(sha256_hash(passwordText.Password)))
             {
                 (App.Current as App).isLoggedIn = true;
+                (App.Current as App).userName = usernameText.Text;
                 errorText.Text = "";
                 this.Frame.Navigate(typeof(OnlinePoster));
             }

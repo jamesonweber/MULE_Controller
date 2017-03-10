@@ -34,6 +34,9 @@ namespace MULE_Controller
         public int sensor { get; set; }
         public String description { get; set; }
 
+        public String group_name { get; set; }
+        public String user_name { get; set; }
+
         public String serial { get; set; }
         public String dataType { get; set; }
         public String metaData { get; set; }

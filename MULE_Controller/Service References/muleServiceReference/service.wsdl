@@ -5,6 +5,7 @@
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/MULEWcfServiceLibrary" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IService1_GetData_InputMessage">
@@ -25,6 +26,18 @@
   <wsdl:message name="IService1_checkLogin_OutputMessage">
     <wsdl:part name="parameters" element="tns:checkLoginResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_getGroups_InputMessage">
+    <wsdl:part name="parameters" element="tns:getGroups" />
+  </wsdl:message>
+  <wsdl:message name="IService1_getGroups_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_uploadPosts_InputMessage">
+    <wsdl:part name="parameters" element="tns:uploadPosts" />
+  </wsdl:message>
+  <wsdl:message name="IService1_uploadPosts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:uploadPostsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetData" message="tns:IService1_GetData_InputMessage" />
@@ -37,6 +50,14 @@
     <wsdl:operation name="checkLogin">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/checkLogin" message="tns:IService1_checkLogin_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/checkLoginResponse" message="tns:IService1_checkLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getGroups">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/getGroups" message="tns:IService1_getGroups_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/getGroupsResponse" message="tns:IService1_getGroups_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="uploadPosts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/uploadPosts" message="tns:IService1_uploadPosts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/uploadPostsResponse" message="tns:IService1_uploadPosts_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -61,6 +82,24 @@
     </wsdl:operation>
     <wsdl:operation name="checkLogin">
       <soap:operation soapAction="http://tempuri.org/IService1/checkLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGroups">
+      <soap:operation soapAction="http://tempuri.org/IService1/getGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadPosts">
+      <soap:operation soapAction="http://tempuri.org/IService1/uploadPosts" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

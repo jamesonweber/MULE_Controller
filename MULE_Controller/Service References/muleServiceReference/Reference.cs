@@ -60,6 +60,246 @@ namespace MULE_Controller.muleServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DataPost", Namespace="http://schemas.datacontract.org/2004/07/MULEWcfServiceLibrary")]
+    public partial class DataPost : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private float avgField;
+        
+        private string dataTypeField;
+        
+        private string datetimeField;
+        
+        private float depthField;
+        
+        private string descriptionField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<int> detailsValuesField;
+        
+        private float eastingsField;
+        
+        private string group_nameField;
+        
+        private string metaDataField;
+        
+        private float northingsField;
+        
+        private float sdField;
+        
+        private float semField;
+        
+        private int sensorField;
+        
+        private string serialField;
+        
+        private string user_nameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float avg {
+            get {
+                return this.avgField;
+            }
+            set {
+                if ((this.avgField.Equals(value) != true)) {
+                    this.avgField = value;
+                    this.RaisePropertyChanged("avg");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string dataType {
+            get {
+                return this.dataTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.dataTypeField, value) != true)) {
+                    this.dataTypeField = value;
+                    this.RaisePropertyChanged("dataType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string datetime {
+            get {
+                return this.datetimeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.datetimeField, value) != true)) {
+                    this.datetimeField = value;
+                    this.RaisePropertyChanged("datetime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float depth {
+            get {
+                return this.depthField;
+            }
+            set {
+                if ((this.depthField.Equals(value) != true)) {
+                    this.depthField = value;
+                    this.RaisePropertyChanged("depth");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.descriptionField, value) != true)) {
+                    this.descriptionField = value;
+                    this.RaisePropertyChanged("description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<int> detailsValues {
+            get {
+                return this.detailsValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.detailsValuesField, value) != true)) {
+                    this.detailsValuesField = value;
+                    this.RaisePropertyChanged("detailsValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float eastings {
+            get {
+                return this.eastingsField;
+            }
+            set {
+                if ((this.eastingsField.Equals(value) != true)) {
+                    this.eastingsField = value;
+                    this.RaisePropertyChanged("eastings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string group_name {
+            get {
+                return this.group_nameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.group_nameField, value) != true)) {
+                    this.group_nameField = value;
+                    this.RaisePropertyChanged("group_name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string metaData {
+            get {
+                return this.metaDataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.metaDataField, value) != true)) {
+                    this.metaDataField = value;
+                    this.RaisePropertyChanged("metaData");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float northings {
+            get {
+                return this.northingsField;
+            }
+            set {
+                if ((this.northingsField.Equals(value) != true)) {
+                    this.northingsField = value;
+                    this.RaisePropertyChanged("northings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float sd {
+            get {
+                return this.sdField;
+            }
+            set {
+                if ((this.sdField.Equals(value) != true)) {
+                    this.sdField = value;
+                    this.RaisePropertyChanged("sd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float sem {
+            get {
+                return this.semField;
+            }
+            set {
+                if ((this.semField.Equals(value) != true)) {
+                    this.semField = value;
+                    this.RaisePropertyChanged("sem");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int sensor {
+            get {
+                return this.sensorField;
+            }
+            set {
+                if ((this.sensorField.Equals(value) != true)) {
+                    this.sensorField = value;
+                    this.RaisePropertyChanged("sensor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string serial {
+            get {
+                return this.serialField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.serialField, value) != true)) {
+                    this.serialField = value;
+                    this.RaisePropertyChanged("serial");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string user_name {
+            get {
+                return this.user_nameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.user_nameField, value) != true)) {
+                    this.user_nameField = value;
+                    this.RaisePropertyChanged("user_name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="muleServiceReference.IService1")]
     public interface IService1 {
@@ -72,6 +312,12 @@ namespace MULE_Controller.muleServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/checkLogin", ReplyAction="http://tempuri.org/IService1/checkLoginResponse")]
         System.Threading.Tasks.Task<string> checkLoginAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getGroups", ReplyAction="http://tempuri.org/IService1/getGroupsResponse")]
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> getGroupsAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/uploadPosts", ReplyAction="http://tempuri.org/IService1/uploadPostsResponse")]
+        System.Threading.Tasks.Task<bool> uploadPostsAsync(MULE_Controller.muleServiceReference.DataPost dp);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -127,6 +373,14 @@ namespace MULE_Controller.muleServiceReference {
         
         public System.Threading.Tasks.Task<string> checkLoginAsync(string username) {
             return base.Channel.checkLoginAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> getGroupsAsync(string username) {
+            return base.Channel.getGroupsAsync(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> uploadPostsAsync(MULE_Controller.muleServiceReference.DataPost dp) {
+            return base.Channel.uploadPostsAsync(dp);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync() {

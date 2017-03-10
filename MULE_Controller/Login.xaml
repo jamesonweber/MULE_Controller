@@ -54,7 +54,7 @@
                     <TextBlock Padding="0,0,10,0">Password:</TextBlock>
                     <PasswordBox Name="passwordText" Width="400" />
                 </StackPanel>
-                <TextBlock Name="errorText"></TextBlock>
+                <TextBlock Padding="0,15,0,0" Name="errorText"></TextBlock>
                 <Button Padding="0,0,0,0" Name="loginButton" Width="100" Height="35" Margin="0,10,0,0" Click="loginButton_Click">Login</Button>
             </StackPanel>
         </Grid>
