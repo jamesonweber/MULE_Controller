@@ -498,19 +498,26 @@ namespace MULE_Controller
 
         private void queueButton_Click(object sender, RoutedEventArgs e)
         {
-            if(sensorCombo.SelectedValue.Equals("Module 1"))
+
+            if (sensorCombo.SelectionBoxItem.ToString().Equals("Module 1"))
             {
-                lock(s1)
+                if (s1 == null) { return; }
+                lock (s1)
                 {
-                    s1.description = descriptionText.Text;
-                    (App.Current as App).dpList.Add(s1);
+                    DataPost qs1 = new DataPost();
+                    qs1.setDataPost(s1.sensor, s1.serial, s1.dataType, s1.metaData, s1.sem, s1.sd, s1.avg, s1.detailsValues, s1.northings, s1.eastings, s1.depth, s1.datetime);
+                    qs1.description = descriptionText.Text;
+                    (App.Current as App).dpList.Add(qs1);
                 }
             }
-            else if (sensorCombo.SelectedValue.Equals("Module 2"))
+            else if (sensorCombo.SelectionBoxItem.ToString().Equals("Module 2"))
             {
+                if (s2 == null) { return; }
                 lock (s2)
                 {
-                    s2.description = descriptionText.Text;
+                    DataPost qs2 = new DataPost();
+                    qs2.setDataPost(s2.sensor, s2.serial, s2.dataType, s2.metaData, s2.sem, s2.sd, s2.avg, s2.detailsValues, s2.northings, s2.eastings, s2.depth, s2.datetime);
+                    qs2.description = descriptionText.Text;
                     (App.Current as App).dpList.Add(s2);
                 }
             }
