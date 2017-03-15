@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.Sockets;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,6 +28,8 @@ namespace MULE_Controller
         public List<DataPost> dpList;
         public bool uploaded { get; set; }
         public String userName { get; set; }
+
+        public VLC.MediaElement mp;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -53,6 +56,8 @@ namespace MULE_Controller
             }
 #endif
             Frame rootFrame = Window.Current.Content as Frame;
+
+
 
             if(dpList == null)
             {

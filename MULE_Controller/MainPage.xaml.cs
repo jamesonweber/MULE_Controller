@@ -11,6 +11,7 @@ using Windows.Storage.Streams;
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
+using VLC;
 
 
 
@@ -51,7 +52,7 @@ namespace MULE_Controller
     {
         //String dns = "169.254.49.188"; 
 
-        private String dns = "192.168.1.10";
+        private String dns = "localhost";
         private String port = "8888";
 
         private String dataport = "8889";
@@ -69,12 +70,28 @@ namespace MULE_Controller
         private DataPost s1 = new DataPost();
         private DataPost s2 = new DataPost();
 
-        
-
         public MainPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+
+            if ((App.Current as App).mp == null)
+            {
+                (App.Current as App).mp = new VLC.MediaElement();
+                (App.Current as App).mp.Source = new Uri("http://169.254.49.188:8090");
+                (App.Current as App).mp.AreTransportControlsEnabled = true;
+                vlcGrid.Children.Add((App.Current as App).mp);
+                (App.Current as App).mp.Play();
+            }  
+            else
+            {
+                (App.Current as App).mp = new VLC.MediaElement();
+                (App.Current as App).mp.Source = new Uri("http://169.254.49.188:8090");
+                (App.Current as App).mp.AreTransportControlsEnabled = true;
+                vlcGrid.Children.Add((App.Current as App).mp);
+                (App.Current as App).mp.Play();
+            }    
+
+            //this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Required;
         }
 
         /* Method to deal with syncing the application with all external dependancies
@@ -171,8 +188,9 @@ namespace MULE_Controller
             while (true)
             {
 
-                packet = await data_program_read();
-
+                try { packet = await data_program_read();  }
+                catch (Exception) { return; }
+                
                 splitPacket = packet.Split(new char[] { '|' });
                 splitDetails = splitPacket[9].Split(new char[] { ',' });
                 for (int i = 0; i < 10; i++)
@@ -259,7 +277,7 @@ namespace MULE_Controller
                         throw;
                 }
             }
-            dataprogramStatusTextBlock.Text = "MULE Controls Status: Connected";
+            dataprogramStatusTextBlock.Text = "MULE Sensors Status: Connected";
 
             Stream streamOut = datasocket.OutputStream.AsStreamForWrite();
             StreamWriter writer = new StreamWriter(streamOut);
@@ -480,7 +498,8 @@ namespace MULE_Controller
 
         private void OnlineButton_Click(object sender, RoutedEventArgs e)
         {
-            if((App.Current as App).isLoggedIn==true)
+            datasocket.Dispose();
+            if ((App.Current as App).isLoggedIn==true)
             {
                 this.Frame.Navigate(typeof(OnlinePoster));
             }
