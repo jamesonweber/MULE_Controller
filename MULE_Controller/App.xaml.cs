@@ -30,6 +30,7 @@ namespace MULE_Controller
         public String userName { get; set; }
 
         public VLC.MediaElement mp;
+        public bool synced { get; set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

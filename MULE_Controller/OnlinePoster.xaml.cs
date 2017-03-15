@@ -114,7 +114,7 @@ namespace MULE_Controller
             muleServiceReference.Service1Client msr = new muleServiceReference.Service1Client();
             foreach(var dp in (App.Current as App).dpList)
             {
-                bool result = await msr.uploadPostsAsync(new muleServiceReference.DataPost { sensor = dp.sensor, serial = dp.serial, user_name = uname, group_name = group,
+                bool result = await msr.uploadPostsAsync(new muleServiceReference.DataPost { sensor = dp.sensor, description = dp.description, serial = dp.serial, user_name = uname, group_name = group,
                     dataType = dp.dataType, metaData = dp.metaData, sem = dp.sem, sd = dp.sd, avg = dp.avg, detailsValues = null,
                             northings = dp.northings, eastings = dp.eastings, depth = dp.depth, datetime = dp.datetime });
             }

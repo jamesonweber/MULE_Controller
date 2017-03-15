@@ -89,7 +89,12 @@ namespace MULE_Controller
                 (App.Current as App).mp.AreTransportControlsEnabled = true;
                 vlcGrid.Children.Add((App.Current as App).mp);
                 (App.Current as App).mp.Play();
-            }    
+            }  
+            
+            if((App.Current as App).synced)
+            {
+                resync();
+            }  
 
             //this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Required;
         }
@@ -101,6 +106,25 @@ namespace MULE_Controller
          * -Video Feed
          */
         private async void connectButton_Click(object sender, RoutedEventArgs e)
+        {
+            (App.Current as App).synced = true;
+            if (socket == null)
+            {
+                //await central_program_Connect(dns, port);
+            }
+
+            if (datasocket == null)
+            {
+                await data_program_Connect(dns, dataport);
+                collect_display_modules();
+            }
+
+            if (gamepad == null)
+            {
+                gamepad_Controls();
+            }
+        }
+        private async void resync()
         {
             if (socket == null)
             {
@@ -498,7 +522,14 @@ namespace MULE_Controller
 
         private void OnlineButton_Click(object sender, RoutedEventArgs e)
         {
-            datasocket.Dispose();
+            if (datasocket != null)
+            {
+                datasocket.Dispose();
+            }
+            if (socket != null)
+            {
+                socket.Dispose();
+            }
             if ((App.Current as App).isLoggedIn==true)
             {
                 this.Frame.Navigate(typeof(OnlinePoster));
@@ -512,7 +543,7 @@ namespace MULE_Controller
 
         private void TasksButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
+            //this.Frame.Navigate(typeof(MainPage));
         }
 
         private void queueButton_Click(object sender, RoutedEventArgs e)
