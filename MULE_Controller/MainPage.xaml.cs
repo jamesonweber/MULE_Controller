@@ -128,6 +128,8 @@ namespace MULE_Controller
         }
         private async void resync()
         {
+            await Task.Delay(TimeSpan.FromMilliseconds(1000));
+
             if (socket == null)
             {
                 await central_program_Connect(dns, port);
@@ -141,7 +143,9 @@ namespace MULE_Controller
 
             if (gamepad == null)
             {
-                gamepad_Controls();
+                gamepad = Gamepad.Gamepads[0];
+                controllerStatusTextBlock.Text = "XBOX Controller Status: Connected";
+                gamepad_Controls();                
             }
         }
 
@@ -169,16 +173,16 @@ namespace MULE_Controller
             float eastings;
             float depth;
             String datetime;
+            while(true)
+            {
+
+            
             try
             {
-                while (packet == null)
-                {
-                    packet = await data_program_read();
-                }
-                packet = await data_program_read();
-            }
-            catch(Exception) { }
 
+                packet = await data_program_read();
+                packet = await data_program_read();
+            
             splitPacket = packet.Split(new char[] { '|' });
             splitDetails = splitPacket[9].Split(new char[] { ',' });
             for(int i = 0; i<10; i++)
@@ -273,6 +277,15 @@ namespace MULE_Controller
 
             }
 
+            } catch (System.Runtime.InteropServices.COMException)
+                {
+                    return;
+                }
+                catch (System.ObjectDisposedException)
+                {
+                    return;
+                }
+            }
         }
 
         /* Method to read data program packets */
