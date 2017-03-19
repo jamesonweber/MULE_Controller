@@ -50,12 +50,14 @@ namespace MULE_Controller
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        //String dns = "169.254.49.188"; 
+        String dns = "169.254.49.188"; 
 
-        private String dns = "localhost";
+        //private String dns = "localhost";
         private String port = "8888";
 
         private String dataport = "8889";
+
+        private string cntlhandshake = "CNTLhandshake|servoMaxAngle,30|thrustLimiter,0.8|revThrustLimiter,0.4|demoMode,0|END|";
 
         private StreamSocket socket;
         private DataWriter writer;
@@ -110,7 +112,7 @@ namespace MULE_Controller
             (App.Current as App).synced = true;
             if (socket == null)
             {
-                //await central_program_Connect(dns, port);
+                await central_program_Connect(dns, port);
             }
 
             if (datasocket == null)
@@ -128,7 +130,7 @@ namespace MULE_Controller
         {
             if (socket == null)
             {
-                //await central_program_Connect(dns, port);
+                await central_program_Connect(dns, port);
             }
 
             if (datasocket == null)
@@ -167,12 +169,16 @@ namespace MULE_Controller
             float eastings;
             float depth;
             String datetime;
-
-            while(packet == null)
+            try
             {
-                packet = await data_program_read();                
+                while (packet == null)
+                {
+                    packet = await data_program_read();
+                }
+                packet = await data_program_read();
             }
-            
+            catch(Exception) { }
+
             splitPacket = packet.Split(new char[] { '|' });
             splitDetails = splitPacket[9].Split(new char[] { ',' });
             for(int i = 0; i<10; i++)
@@ -303,11 +309,7 @@ namespace MULE_Controller
             }
             dataprogramStatusTextBlock.Text = "MULE Sensors Status: Connected";
 
-            Stream streamOut = datasocket.OutputStream.AsStreamForWrite();
-            StreamWriter writer = new StreamWriter(streamOut);
-            string request = "handshake";
-            await writer.WriteLineAsync(request);
-            await writer.FlushAsync();
+
 
         }
 
@@ -341,7 +343,10 @@ namespace MULE_Controller
             // Set the Unicode character encoding for the output stream
             writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
             // Specify the byte order of a stream.
-            writer.ByteOrder = Windows.Storage.Streams.ByteOrder.LittleEndian;      
+            writer.ByteOrder = Windows.Storage.Streams.ByteOrder.LittleEndian;
+            
+            writer.WriteString(cntlhandshake);
+            await writer.FlushAsync();
         }
 
         
@@ -421,11 +426,11 @@ namespace MULE_Controller
                 returnString += s.Trim() + "|" ;
             }
 
-            if(input.RightTrigger > 0.0)
+            if(input.RightTrigger >= 0.0)
             {
                 returnString += getRightTrigger(input, parsedButtons, "RightTrigger,");
             }
-            if (input.LeftTrigger > 0.0)
+            if (input.LeftTrigger >= 0.0)
             {
                 returnString += getLeftTrigger(input, parsedButtons, "LeftTrigger,");
             }
@@ -464,8 +469,8 @@ namespace MULE_Controller
             if ((!(x <= deadZonePos && x >= deadZoneNeg))
                 || (!(y <= deadZonePos && y >= deadZoneNeg)))
             {
-                rightServo = (x * Math.Cos(piDivFour)) - (y * Math.Sin(piDivFour));
-                leftServo = (x * Math.Sin(piDivFour)) + (y * Math.Cos(piDivFour));
+                leftServo = (x * Math.Cos(piDivFour)) - (y * Math.Sin(piDivFour));
+                rightServo = (x * Math.Sin(piDivFour)) + (y * Math.Cos(piDivFour));
             }
 
             plot = "ServoL," + leftServo + "|ServoR," + rightServo + "|"; 
@@ -522,6 +527,10 @@ namespace MULE_Controller
 
         private void OnlineButton_Click(object sender, RoutedEventArgs e)
         {
+            if (gamepad != null)
+            {
+                gamepad = null;
+            }
             if (datasocket != null)
             {
                 datasocket.Dispose();
