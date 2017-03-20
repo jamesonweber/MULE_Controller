@@ -76,6 +76,11 @@ namespace MULE_Controller
         {
             this.InitializeComponent();
 
+            if((App.Current as App).isLoggedIn)
+            {
+                LogoutButton.Visibility = Visibility.Visible;
+            }
+
             if ((App.Current as App).mp == null)
             {
                 (App.Current as App).mp = new VLC.MediaElement();
@@ -304,7 +309,6 @@ namespace MULE_Controller
             HostName host = new HostName(hostStr);
             try
             {
-                // Connect to the server
                 await datasocket.ConnectAsync(host, port);
 
             }
@@ -313,10 +317,8 @@ namespace MULE_Controller
                 switch (SocketError.GetStatus(exception.HResult))
                 {
                     case SocketErrorStatus.HostNotFound:
-                        // Handle HostNotFound Error
                         throw;
                     default:
-                        // If this is an unknown status it means that the error is fatal and retry will likely fail.
                         throw;
                 }
             }
@@ -333,7 +335,6 @@ namespace MULE_Controller
             HostName host = new HostName(hostStr);
             try
             {
-                // Connect to the server
                 await socket.ConnectAsync(host, port);
 
             }
@@ -342,10 +343,8 @@ namespace MULE_Controller
                 switch (SocketError.GetStatus(exception.HResult))
                 {
                     case SocketErrorStatus.HostNotFound:
-                        // Handle HostNotFound Error
                         throw;
                     default:
-                        // If this is an unknown status it means that the error is fatal and retry will likely fail.
                         throw;
                 }
             }
@@ -353,9 +352,7 @@ namespace MULE_Controller
             
 
             writer = new DataWriter(socket.OutputStream);
-            // Set the Unicode character encoding for the output stream
             writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-            // Specify the byte order of a stream.
             writer.ByteOrder = Windows.Storage.Streams.ByteOrder.LittleEndian;
             
             writer.WriteString(cntlhandshake);
@@ -391,9 +388,7 @@ namespace MULE_Controller
 
                         inputString = gamepad_packet_generator(input, cntrCounter);
 
-                        // Gets the size of UTF-8 string.
                         writer.MeasureString(inputString);
-                        // Write a string value to the output stream.
                         writer.WriteString(inputString);
 
                         gamepadDelta = input;
@@ -593,6 +588,14 @@ namespace MULE_Controller
                     (App.Current as App).dpList.Add(s2);
                 }
             }
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            (App.Current as App).isLoggedIn = false;
+            (App.Current as App).userName = null;
+            (App.Current as App).uploaded = false;
+            LogoutButton.Visibility = Visibility.Collapsed;
         }
     }
 }

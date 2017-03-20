@@ -32,8 +32,13 @@ namespace MULE_Controller
         ComboBox groupCombo;
 
         public OnlinePoster()
-        {
+        { 
+
             this.InitializeComponent();
+            if ((App.Current as App).isLoggedIn)
+            {
+                LogoutButton.Visibility = Visibility.Visible;
+            }
             setUpUI();
         }
 
@@ -138,6 +143,15 @@ namespace MULE_Controller
 
         private void TasksButton_Click(object sender, RoutedEventArgs e)
         {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            (App.Current as App).isLoggedIn = false;
+            (App.Current as App).userName = null;
+            (App.Current as App).uploaded = false;
+            LogoutButton.Visibility = Visibility.Collapsed;
             this.Frame.Navigate(typeof(MainPage));
         }
     }

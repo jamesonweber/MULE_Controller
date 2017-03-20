@@ -30,6 +30,7 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Button x:Name="TasksButton" Style="{StaticResource TextBlockButtonStyle}" Grid.Row="1" VerticalAlignment="Stretch" Click="TasksButton_Click">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
@@ -41,6 +42,12 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                         <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xE12B;" TextAlignment="Center" Margin="5" />
                                         <TextBlock Text="Online" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="LogoutButton" Style="{StaticResource TextBlockButtonStyle}" Grid.Row="3" VerticalAlignment="Top" Click="LogoutButton_Click" Visibility="Collapsed">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock FontSize="20" FontFamily="Segoe MDL2 Assets" Text="&#xE125;" TextAlignment="Center" Margin="5" />
+                                        <TextBlock Text="Logout" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0"/>
                                     </StackPanel>
                                 </Button>
                             </Grid>
