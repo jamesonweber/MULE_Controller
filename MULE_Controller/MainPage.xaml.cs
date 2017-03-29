@@ -220,9 +220,9 @@ namespace MULE_Controller
                 northings, eastings, depth, datetime);
 
             module1Display.Text = "Module 1: " + s1.metaData + " " + s1.avg + " " + s1.dataType;
-            northingsDisplay.Text = "Northings: " + s1.northings;
-            eastingsDisplay.Text = "Eastings: " + s1.eastings;
-            depthDisplay.Text = "Depth: " + s1.depth + " M";
+            northingsDisplay.Text = "Northings: " + s1.northings + " m";
+            eastingsDisplay.Text = "Eastings: " + s1.eastings + " m";
+            depthDisplay.Text = "Depth: " + s1.depth + " m";
 
             while (true)
             {
