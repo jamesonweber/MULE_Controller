@@ -57,7 +57,7 @@ namespace MULE_Controller
 
         private String dataport = "8889";
 
-        private string cntlhandshake = "CNTLhandshake|servoMaxAngle,30|thrustLimiter,0.8|revThrustLimiter,0.4|demoMode,0|END|";
+        private string cntlhandshake = "CNTLhandshake|servoMaxAngle,45|thrustLimiter,0.1|revThrustLimiter,0.1|demoMode,0|END|";
 
         private StreamSocket socket;
         private DataWriter writer;
@@ -276,9 +276,9 @@ namespace MULE_Controller
                     
                     module2Display.Text = "Module 1: " + s1.metaData + " " + s1.avg + " " + s1.dataType;
                 }
-                northingsDisplay.Text = "Northings: " + s1.northings;
-                eastingsDisplay.Text = "Eastings: " + s1.eastings;
-                depthDisplay.Text = "Depth: " + s1.depth + " M";
+                northingsDisplay.Text = "Northings: " + s1.northings + "m";
+                eastingsDisplay.Text = "Eastings: " + s1.eastings + "m";
+                depthDisplay.Text = "Depth: " + s1.depth + "m";
 
             }
 
